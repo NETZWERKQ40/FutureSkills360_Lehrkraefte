@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>FutureSkills360° – Lehrkräfte Sek. I</title>
+  <meta name="description" content="FutureSkills360° – Lehrkräfte Sekundarstufe I. Antworten werden nur in dieser Sitzung gespeichert."/>
+
+  <!-- Charts & PDF -->
+  <script src="https://cdn.plot.ly/plotly-2.32.0.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js" defer></script>
+
+  <style>
+    :root{
+      --bg:#f7fafc; --panel:#ffffff; --fg:#0f1720; --muted:#5c6b74;
+      --primary:#234b59; --primary-weak:#e7eff2; --primary-grad:#2f6677;
+      --focus:#ffb703; --border:#d0d7de; --error:#b00020;
+      --shadow:0 10px 20px rgba(0,0,0,.06), 0 3px 8px rgba(0,0,0,.04);
+      --radius:16px;
+
+      /* Rotierender Seitenhintergrund (kannst du durch Schulbilder ersetzen) */
+      --page-bg-image: url("bg-body-1.webp");
+
+      /* Farbschema für Kategorien */
+      --cat-tech:#234B59;    /* Technologische Kompetenzen */
+      --cat-digi:#93B7BE;    /* Digitale Schlüsselkompetenzen */
+      --cat-classic:#F5C396; /* Klassische Kompetenzen */
+      --cat-trans:#78290F;   /* Transformative Kompetenzen */
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Ubuntu,Cantarell,"Noto Sans","Helvetica Neue",Arial,sans-serif;
+      color:var(--fg);
+      background:
+        radial-gradient(1200px 600px at -10% -10%, #ecf4f7 20%, transparent 60%),
+        radial-gradient(800px 500px at 110% -10%, #eaf2f6 20%, transparent 60%),
+        var(--bg);
+      line-height:1.6;
+      position:relative;
+    }
+    /* dezentes Seitenhintergrundbild */
+    body::before{
+      content:""; position:fixed; inset:0; z-index:0; pointer-events:none;
+      background-image: var(--page-bg-image);
+      background-size: cover; background-position: center; background-repeat: no-repeat;
+      opacity: 0.14;
+    }
+
+    .hero{
+      background:linear-gradient(135deg, var(--primary) 0%, var(--primary-grad) 100%);
+      color:#fff; padding:28px 0 24px; position:sticky; top:0; z-index:5; overflow:hidden;
+      box-shadow:0 6px 18px rgba(0,0,0,.08);
+    }
+    .hero .container{ position:relative; z-index:1; }
+    .container{max-width:1000px;margin:0 auto;padding:0 1.25rem}
+    .hero h1{margin:0;font-size:clamp(1.3rem,2.5vw,1.9rem);letter-spacing:.2px;font-weight:800}
+    .hero p.lead{margin:.35rem 0 0;opacity:.95}
+    .shell{max-width:1000px;margin:18px auto;padding:0 1.25rem 40px}
+    .card{border:1px solid var(--border);border-radius:var(--radius);padding:1.1rem;margin:1rem 0;background:var(--panel);box-shadow:var(--shadow)}
+
+    .actions{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:.9rem}
+    button,.btn{
+      appearance:none;border:2px solid var(--primary);background:var(--primary);color:#fff;
+      padding:.75rem 1.1rem;border-radius:14px;cursor:pointer;font-weight:750;letter-spacing:.2px;
+      transition:transform .06s,box-shadow .2s,background .2s,color .2s;
+      box-shadow:0 8px 14px rgba(35,75,89,.22);
+    }
+    button:hover{transform:translateY(-1px);box-shadow:0 12px 18px rgba(35,75,89,.28)}
+    .secondary{background:transparent;color:var(--primary)}
+    button:focus,input:focus{outline:3px solid var(--focus);outline-offset:2px}
+
+    .muted{color:var(--muted)}
+    .hidden{display:none!important}
+    .err{color:var(--error);margin-top:.5rem}
+
+    fieldset{border:none;padding:0;margin:0}
+    legend{font-weight:800;margin-bottom:.7rem;font-size:1.05rem}
+
+    .option{
+      display:flex;align-items:flex-start;gap:.8rem;border:1.5px solid var(--border);
+      border-radius:14px;padding:.85rem 1rem;margin:.55rem 0;background:#fff;
+      transition:border-color .2s,background .2s,transform .06s;box-shadow:0 2px 6px rgba(0,0,0,.04)
+    }
+    .option:hover{background:var(--primary-weak);border-color:var(--primary);transform:translateY(-1px)}
+    .optIndex{
+      flex:0 0 2rem;height:2rem;border-radius:10px;display:flex;align-items:center;justify-content:center;
+      font-weight:800;border:1px solid var(--border);background:#f4f7f9
+    }
+    .option input{margin-top:.25rem}
+    .option span.txt{display:block;margin-top:.1rem}
+
+    .grid-2{display:grid;grid-template-columns:1fr;gap:1rem}
+    @media (min-width:960px){.grid-2{grid-template-columns:1.05fr .95fr}}
+
+    table{width:100%;border-collapse:collapse;margin-top:1rem;background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.05)}
+    th,td{text-align:left;border-bottom:1px solid var(--border);padding:.6rem .7rem}
+    th{background:#f3f6f8;font-weight:800}
+
+    /* Silbentrennung für Skillnamen (wirkt auch im PDF) */
+    #tableWrap table td:first-child{
+      hyphens:auto; overflow-wrap:anywhere; word-break:normal; max-width:0;
+    }
+
+    .progress{width:100%;height:14px;background:#e9eef2;border-radius:999px;overflow:hidden;border:1px solid #d8e0e6}
+    .bar{height:100%;width:0%;background:linear-gradient(90deg,var(--primary),#2f6f85);transition:width .25s ease}
+
+    .toprow{display:flex;align-items:center;justify-content:space-between;gap:1rem;margin-bottom:.8rem;flex-wrap:wrap}
+
+    /* Ergebnis mit dezentem Hintergrundbild (bitte eigenes Motiv ablegen) */
+    #results{ position:relative; overflow:hidden; isolation:isolate; }
+    #results::before{
+      content:""; position:absolute; inset:0; pointer-events:none; z-index:0;
+      background-image: url("lehrkraefte_bg.webp"), url("lehrkraefte_bg.jpg");
+      background-size: cover; background-position: center 35%; background-repeat:no-repeat;
+      opacity:.18;
+    }
+    #results > *{ position:relative; z-index:1; }
+  </style>
+</head>
+<body>
+  <div class="hero">
+    <div class="container">
+      <h1 id="title">FutureSkills360° – Lehrkräfte Sek. I</h1>
+      <p class="lead">Zielgruppe: Lehrkräfte Sekundarstufe I · Antworten werden nur in dieser Sitzung gespeichert</p>
+    </div>
+  </div>
+
+  <main class="shell" role="main">
+    <section id="intro" class="card" aria-labelledby="intro-h">
+      <h2 id="intro-h" style="margin:.2rem 0 .4rem;font-size:1.2rem;">Kurz erklärt</h2>
+      <p>Sie bearbeiten <strong id="countScenarios"></strong> kurze <strong>Szenarien</strong>. Tipp: Mit den Tasten <strong>1–3</strong> wählen Sie eine Antwort.</p>
+      <div class="toprow">
+        <span class="muted" id="estTime"></span>
+      </div>
+      <div class="actions">
+        <button id="startBtn" aria-describedby="start-hint">FutureSkills360° starten</button>
+        <button id="skipToResults" class="secondary" type="button" title="Nur Demo der Auswertung anzeigen">Nur Auswertung zeigen</button>
+        <p id="start-hint" class="sr-only">Startet das erste Szenario.</p>
+      </div>
+    </section>
+
+    <section id="break" class="card hidden" aria-live="polite">
+      <h2>Kurze Pause</h2>
+      <p>Abschnitt abgeschlossen. Kurz durchatmen – weiter geht’s, wenn Sie bereit sind.</p>
+      <div class="actions"><button id="breakNextBtn" type="button">Weiter</button></div>
+    </section>
+
+    <section id="quiz" class="card hidden" aria-live="polite">
+      <div class="toprow">
+        <div class="progress" aria-label="Fortschrittsbalken"><div id="pbar" class="bar"></div></div>
+        <div class="muted"><span id="progressText"></span></div>
+      </div>
+      <form id="qForm" novalidate>
+        <fieldset>
+          <legend id="qText">Szenario</legend>
+          <div id="options"></div>
+        </fieldset>
+      </form>
+      <div class="err" id="error" role="alert" aria-live="assertive"></div>
+      <div class="actions">
+        <button id="prevBtn" class="secondary" type="button">Zurück</button>
+        <button id="nextBtn" type="button">Weiter</button>
+      </div>
+      <p class="muted" style="margin:.5rem 0 0;">Tastatur: <strong>1–3</strong> wählen Antwort, <strong>Enter</strong> weiter, <strong>Backspace</strong> zurück.</p>
+    </section>
+
+    <section id="results" class="card hidden" aria-labelledby="res-h">
+      <h2 id="res-h" style="margin-top:.2rem;">Ihre Auswertung</h2>
+      <div class="grid-2">
+        <div>
+          <div id="chart" role="img" aria-label="Sunburst-Diagramm der Future Skills"></div>
+          <div class="actions" style="margin-top:.8rem;">
+            <button id="copyBtn" type="button" class="secondary">Kurzreport kopieren</button>
+            <button id="pdfBtn" type="button">PDF herunterladen</button>
+            <button id="resetBtn" type="button" class="secondary">Zurücksetzen</button>
+          </div>
+        </div>
+        <div>
+          <h3 style="margin:.2rem 0;">Textuelle Übersicht (barrierefrei)</h3>
+          <p class="muted">Auflistung aller 26 Skills mit Punkten. Die Summen je Kategorie sehen Sie im Diagramm.</p>
+          <div id="tableWrap"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+<script>
+/* ===== Rotierender Seitenhintergrund (9 Bilder) ===== */
+const BG_IMAGES_PAGE = [
+  "bg-body-1.webp","bg-body-2.webp","bg-body-3.webp","bg-body-4.webp","bg-body-5.webp",
+  "bg-body-6.webp","bg-body-7.webp","bg-body-8.webp","bg-body-9.webp"
+];
+function setBgFromIndex(i){
+  const img = BG_IMAGES_PAGE[i % BG_IMAGES_PAGE.length];
+  document.documentElement.style.setProperty('--page-bg-image', `url("${img}")`);
+}
+document.addEventListener('DOMContentLoaded', ()=>{ try{ setBgFromIndex(0); }catch(e){} });
+
+/* ===== Kategorien & Labels ===== */
+const CATEGORIES = {
+  "Technologische_Kompetenzen": [
+    "KI_Datenkompetenz","Softwareentwicklung","Nutzerzentriertes_Design","Digitale_Infrastruktur_und_Cybersicherheit","Hardware_Robotikentwicklung","Prompt_Engineering"
+  ],
+  "Digitale_Schluesselkompetenzen": [
+    "Digital_Literacy","Digitale_Ethik_und_KI_Governance","Digitale_Kollaboration","KI_gestuetztes_Lernen_und_Weiterbildung","Datenmanagement"
+  ],
+  "Klassische_Kompetenzen": [
+    "Unternehmerisches_Denken_und_Innovationsgeist","Eigenverantwortung_und_Selbstwirksamkeit","Agilitaet","Loesungsfaehigkeit","Kreativitaet","Interkulturelle_Kommunikation","Resilienz","Freundlichkeit","Selbstbewusstsein","Werteorientiertes_Handeln","Weltoffenheit"
+  ],
+  "Transformative_Kompetenzen": [
+    "Urteilsfaehigkeit","Innovationskompetenz","Veraenderungskompetenz","Dialog_und_Konfliktfaehigkeit"
+  ]
+};
+
+const SKILL_LABELS = {
+  "KI_Datenkompetenz":"KI-Datenkompetenz",
+  "Softwareentwicklung":"Softwareentwicklung",
+  "Nutzerzentriertes_Design":"Nutzerzentriertes Design",
+  "Digitale_Infrastruktur_und_Cybersicherheit":"Digitale Infrastruktur & Cybersicherheit",
+  "Hardware_Robotikentwicklung":"Hardware-/Robotikentwicklung",
+  "Prompt_Engineering":"Prompt Engineering",
+  "Digital_Literacy":"Digital Literacy",
+  "Digitale_Ethik_und_KI_Governance":"Digitale Ethik & KI-Governance",
+  "Digitale_Kollaboration":"Digitale Kollaboration",
+  "KI_gestuetztes_Lernen_und_Weiterbildung":"KI-gestütztes Lernen & Weiterbildung",
+  "Datenmanagement":"Datenmanagement",
+  "Unternehmerisches_Denken_und_Innovationsgeist":"Unternehmerisches Denken & Innovationsgeist",
+  "Eigenverantwortung_und_Selbstwirksamkeit":"Eigenverantwortung & Selbstwirksamkeit",
+  "Agilitaet":"Agilität",
+  "Loesungsfaehigkeit":"Lösungsfähigkeit",
+  "Kreativitaet":"Kreativität",
+  "Interkulturelle_Kommunikation":"Interkulturelle Kommunikation",
+  "Resilienz":"Resilienz",
+  "Freundlichkeit":"Freundlichkeit (Kindness)",
+  "Selbstbewusstsein":"Selbstbewusstsein",
+  "Werteorientiertes_Handeln":"Werteorientiertes Handeln",
+  "Weltoffenheit":"Weltoffenheit",
+  "Urteilsfaehigkeit":"Urteilsfähigkeit",
+  "Innovationskompetenz":"Innovationskompetenz",
+  "Veraenderungskompetenz":"Veränderungskompetenz",
+  "Dialog_und_Konfliktfaehigkeit":"Dialog- & Konfliktfähigkeit"
+};
+
+/* ===== Lehrkräfte-Szenarien (LEHR_1 … LEHR_35) ===== */
+const SCENARIOS = [
+  {
+    "id":"LEHR_1",
+    "text":"ChatGPT im Unterricht – Hilfreich oder hinderlich? Situation: In deiner 9. Klasse sollen die Schüler:innen eine Erörterung schreiben. Eine Schülerin gibt ihren Text ab – sprachlich perfekt, aber ohne persönliche Handschrift. Auf Nachfrage sagt sie offen: „Ich hab ChatGPT gefragt, mir beim Schreiben zu helfen.“ Einige Kolleg:innen sehen das als Betrug, andere als Chance, Medienkompetenz zu fördern.",
+    "options":[
+      {"id":"A","label":"Digitale Ethik & KI-Governance – Ich bespreche mit der Klasse offen, wie KI-Tools wie ChatGPT funktionieren, was fairer und was problematischer Einsatz ist. Gemeinsam entwickeln wir Regeln, wann und wie solche Tools im Unterricht genutzt werden dürfen.","skills":[{"key":"Digitale_Ethik_und_KI_Governance","weight":1}]},
+      {"id":"B","label":"KI-Datenkompetenz – Ich zeige der Klasse, wie man Prompts formuliert, um Inhalte kritisch zu prüfen statt blind zu übernehmen. Wir analysieren die Quellenlage und lernen, wie KI-Ergebnisse hinterfragt werden können.","skills":[{"key":"KI_Datenkompetenz","weight":1}]},
+      {"id":"C","label":"Urteilsfähigkeit – Ich bewerte die Situation nüchtern: Der Text ist formal korrekt, aber nicht selbstständig entstanden. Ich erkläre der Schülerin sachlich, dass die Leistung so nicht gewertet werden kann, und biete an, gemeinsam über KI-Nutzung im Unterricht zu sprechen.","skills":[{"key":"Urteilsfaehigkeit","weight":1}]}
+    ]
+  },
+  {
+    "id":"LEHR_2",
+    "text":"Differenzierung im inklusiven Unterricht Situation: Du unterrichtest eine 6. Klasse mit sehr heterogenem Leistungsniveau. Einige Schüler:innen haben Förderbedarf in Sprache und Konzentration, andere sind weit über dem Klassendurchschnitt. Du merkst, dass sich manche unterfordert, andere überfordert fühlen.",
+    "options":[
+      {"id":"A","label":"Agilität – Ich passe meine Unterrichtsplanung spontan an: Ich bilde flexible Gruppen, lasse leistungsstarke Schüler:innen Aufgaben erklären und gebe schwächeren vereinfachte Lernpfade mit visuellen Hilfen. So kann ich schnell auf die Dynamik reagieren.","skills":[{"key":"Agilitaet","weight":1}]},
+      {"id":"B","label":"Eigenverantwortung & Selbstwirksamkeit – Ich führe individuelle Lernziele ein. Jede:r Schüler:in legt wöchentlich fest, was er oder sie erreichen will. Ich begleite den Prozess und lobe sichtbare Fortschritte, um Selbstwirksamkeit zu stärken.","skills":[{"key":"Eigenverantwortung_und_Selbstwirksamkeit","weight":1}]},
+      {"id":"C","label":"Resilienz – Ich merke, dass die Situation mich selbst stresst. Statt mich zu überfordern, suche ich den Austausch mit dem Sonderpädagogen und plane kleine Erfolgserlebnisse ein, um die Klasse und mich zu entlasten.","skills":[{"key":"Resilienz","weight":1}]}
+    ]
+  },
+  {
+    "id":"LEHR_3",
+    "text":"Kollegiale Zusammenarbeit beim digitalen Wandel Situation: Die Schule möchte künftig vermehrt digitale Lernplattformen einsetzen. Eine Kollegin, die kurz vor der Pension steht, sagt: „Das brauche ich nicht mehr.“ Das Kollegium ist gespalten – einige wollen schnelle Umstellung, andere fühlen sich überfordert. Du bist Teil der Steuergruppe Digitalisierung.",
+    "options":[
+      {"id":"A","label":"Digitale Kollaboration – Ich schlage vor, im Kollegium Tandems zu bilden: Technikaffine Lehrkräfte unterstützen andere im Alltag. So wird Wissen geteilt, ohne Druck aufzubauen.","skills":[{"key":"Digitale_Kollaboration","weight":1}]},
+      {"id":"B","label":"Freundlichkeit (Kindness) – Ich spreche die Kollegin direkt an, zeige Verständnis für ihre Unsicherheit und biete an, sie bei ersten Schritten zu begleiten – ohne sie zu überfordern.","skills":[{"key":"Freundlichkeit","weight":1}]},
+      {"id":"C","label":"Veränderungskompetenz – Ich erinnere das Team daran, dass Veränderungen immer Zeit brauchen. Ich rege an, gemeinsam Prioritäten zu setzen und kleine, machbare Ziele festzulegen.","skills":[{"key":"Veraenderungskompetenz","weight":1}]}
+    ]
+  },
+  {
+    "id":"LEHR_4",
+    "text":"Leistungsbewertung nach Gruppenarbeit Situation: Eine Gruppenarbeit im Fach Politik lief sehr unterschiedlich: Zwei Schüler:innen haben viel gearbeitet, drei kaum etwas beigetragen. Jetzt musst du die Leistung fair bewerten.",
+    "options":[
+      {"id":"A","label":"Urteilsfähigkeit – Ich analysiere, welche individuellen Leistungen nachweisbar sind, und bespreche offen mit der Gruppe, wie Beteiligung in Zukunft gerechter gestaltet werden kann.","skills":[{"key":"Urteilsfaehigkeit","weight":1}]},
+      {"id":"B","label":"Werteorientiertes Handeln – Ich entscheide mich bewusst für eine faire Lösung, auch wenn es zusätzliche Arbeit bedeutet: Ich differenziere die Noten, erkläre meine Entscheidung und begründe sie transparent.","skills":[{"key":"Werteorientiertes_Handeln","weight":1}]},
+      {"id":"C","label":"Dialog- & Konfliktfähigkeit – Ich hole die Gruppe an einen Tisch, lasse alle zu Wort kommen und leite das Gespräch lösungsorientiert, damit keine Spannungen bleiben.","skills":[{"key":"Dialog_und_Konfliktfaehigkeit","weight":1}]}
+    ]
+  },
+  {
+    "id":"LEHR_5",
+    "text":"Medienprojekt mit Schüler:innen: Fake News erkennen Situation: In Klasse 8 arbeitest du an einem Medienprojekt. Die Schüler:innen sollen im Internet Informationen zu einem aktuellen Thema recherchieren. Einige übernehmen unkritisch Inhalte von TikTok und zweifelhaften Quellen.",
+    "options":[
+      {"id":"A","label":"Digital Literacy – Ich zeige, wie man Quellen prüft, Impressum und Faktenchecks nutzt, und lasse die Schüler:innen anschließend selbst „Fake News erkennen“-Plakate gestalten.","skills":[{"key":"Digital_Literacy","weight":1}]},
+      {"id":"B","label":"KI-gestütztes Lernen & Weiterbildung – Ich lasse die Klasse KI-Tools nutzen, um Informationen zu strukturieren oder zusammenzufassen, und wir bewerten gemeinsam, was die KI weggelassen oder falsch interpretiert hat.","skills":[{"key":"KI_gestuetztes_Lernen_und_Weiterbildung","weight":1}]},
+      {"id":"C","label":"Kreativität – Ich lasse die Klasse in Gruppen eigene kleine Clips oder Podcasts produzieren, um zu zeigen, wie leicht manipulative Inhalte entstehen können.","skills":[{"key":"Kreativitaet","weight":1}]}
+    ]
+  },
+  {
+    "id":"LEHR_6",
+    "text":"Kulturelle Vielfalt im Klassenraum Situation: In deiner 7. Klasse sitzen Schüler:innen aus vielen Nationen. Beim Thema „Familienformen weltweit“ kommt es zu Spannungen, weil sich einige über Traditionen anderer lustig machen.",
+    "options":[
+      {"id":"A","label":"Interkulturelle Kommunikation – Ich leite die Diskussion, lasse verschiedene Perspektiven zu Wort kommen und moderiere respektvoll, damit gegenseitiges Verständnis entsteht.","skills":[{"key":"Interkulturelle_Kommunikation","weight":1}]},
+      {"id":"B","label":"Weltoffenheit – Ich plane ein kleines Projekt: Jede:r stellt eine Tradition oder einen Feiertag aus der eigenen Kultur vor. So wird Vielfalt als Stärke sichtbar.","skills":[{"key":"Weltoffenheit","weight":1}]},
+      {"id":"C","label":"Werteorientiertes Handeln – Ich mache klar, dass Respekt nicht verhandelbar ist, und verankere das Thema Toleranz auch in den Klassenregeln.","skills":[{"key":"Werteorientiertes_Handeln","weight":1}]}
+    ]
+  },
+  {
+    "id":"LEHR_7",
+    "text":"Einsatz von KI im Fremdsprachenunterricht Situation: Du möchtest im Englischunterricht KI nutzen, um Schreibaufgaben individueller zu gestalten. Einige Schüler:innen tippen jedoch nur Prompts ein, ohne nachzudenken. Du willst das Lernen mit KI sinnvoll gestalten.",
+    "options":[
+      {"id":"A","label":"Prompt Engineering – Ich erkläre der Klasse, wie man gezielte Eingaben formuliert, um die KI produktiv zu nutzen, z. B. „Schreibe einen Text über Umwelt, passend für 8. Klasse, 100 Wörter, einfache Sprache.“","skills":[{"key":"Prompt_Engineering","weight":1}]},
+      {"id":"B","label":"KI-gestütztes Lernen & Weiterbildung – Ich lasse die Schüler:innen ihren KI-Text anschließend reflektieren und verbessern, um Lernprozesse sichtbar zu machen.","skills":[{"key":"KI_gestuetztes_Lernen_und_Weiterbildung","weight":1}]},
+      {"id":"C","label":"Urteilsfähigkeit – Ich bespreche mit den Schüler:innen, wo die Grenzen liegen: Wann wird KI zur Hilfe, wann zur Täuschung?","skills":[{"key":"Urteilsfaehigkeit","weight":1}]}
+    ]
+  },
+  {
+    "id":"LEHR_8",
+    "text":"Defekte Tablets im Unterricht Situation: Während eines Tablet-Unterrichts funktioniert bei mehreren Schüler:innen das WLAN oder die Geräte nicht. Die Stunde droht zu scheitern, weil sich niemand auf die Aufgabe konzentrieren kann.",
+    "options":[
+      {"id":"A","label":"Lösungsfähigkeit – Ich bleibe ruhig, analysiere das Problem und leite die Klasse zu einer Offline-Alternative an (z. B. Gruppenarbeit mit Arbeitsblättern). So bleibt das Lernziel erreichbar.","skills":[{"key":"Loesungsfaehigkeit","weight":1}]},
+      {"id":"B","label":"Technologische Kompetenz (Hardware-/Robotikentwicklung) – Ich überprüfe mit den Schüler:innen die Geräte, erkläre die technischen Hintergründe und leite daraus gemeinsam Regeln für einen reibungslosen Technik-Einsatz ab.","skills":[{"key":"Hardware_Robotikentwicklung","weight":1}]},
+      {"id":"C","label":"Resilienz – Ich nutze die Situation als Lernerfahrung: Technik kann ausfallen – entscheidend ist, flexibel und positiv zu bleiben.","skills":[{"key":"Resilienz","weight":1}]}
+    ]
+  },
+  {
+    "id":"LEHR_9",
+    "text":"Projektwoche „Schule der Zukunft“ Situation: Eure Schule plant eine Projektwoche zum Thema Zukunft und Nachhaltigkeit. Du sollst ein Konzept für ein Schülerprojekt entwickeln, das Technologie und Kreativität verbindet.",
+    "options":[
+      {"id":"A","label":"Nutzerzentriertes Design – Ich plane ein Schülerprojekt, bei dem die Lernenden eigene Ideen zur Schulgestaltung entwickeln – von App-Vorschlägen bis hin zu nachhaltigen Raumkonzepten.","skills":[{"key":"Nutzerzentriertes_Design","weight":1}]},
+      {"id":"B","label":"Innovationskompetenz – Ich lasse die Schüler:innen Zukunftsideen entwickeln, bewerten und in einem Pitch vorstellen – z. B. „Wie könnte Lernen 2035 aussehen?“","skills":[{"key":"Innovationskompetenz","weight":1}]},
+      {"id":"C","label":"Kreativität – Ich leite Workshops an, in denen Schüler:innen Modelle, Prototypen oder Videos gestalten, um ihre Vision sichtbar zu machen.","skills":[{"key":"Kreativitaet","weight":1}]}
+    ]
+  },
+  {
+    "id":"LEHR_10",
+    "text":"Unterrichtsausfall kompensieren – Kollegiale Lösungssuche Situation: Eine Kollegin fällt kurzfristig aus, ihre Klasse steht ohne Vertretung da. Du wirst gefragt, spontan einzuspringen, hast aber selbst viel zu tun.",
+    "options":[
+      {"id":"A","label":"Digitale Kollaboration – Ich stimme mich mit dem Kollegium ab und übernehme digital: Ich stelle online Material bereit und betreue die Klasse kurz virtuell, um Unterrichtsausfall zu vermeiden.","skills":[{"key":"Digitale_Kollaboration","weight":1}]},
+      {"id":"B","label":"Lösungsfähigkeit – Ich organisiere kurzfristig eine kombinierte Unterrichtsstunde, in der beide Klassen an einem gemeinsamen Thema arbeiten – so bleibt Struktur erhalten.","skills":[{"key":"Loesungsfaehigkeit","weight":1}]},
+      {"id":"C","label":"Freundlichkeit (Kindness) – Ich helfe der Kollegin aus, weil ich weiß, wie belastend spontane Ausfälle sind, und organisiere meinen Unterricht danach flexibel.","skills":[{"key":"Freundlichkeit","weight":1}]}
+    ]
+  },
+  {
+    "id":"LEHR_11",
+    "text":"Schulinnovation im Kollegium Situation: Du bist in einer Arbeitsgruppe zur Schulentwicklung. Es geht darum, neue Lernformen zu testen, z. B. Lernbüros oder hybride Lernphasen. Einige Kolleg:innen sind offen, andere blocken ab.",
+    "options":[
+      {"id":"A","label":"Veränderungskompetenz – Ich schlage kleine, machbare Schritte vor und begleite Kolleg:innen bei der Umsetzung, um Vorbehalte abzubauen.","skills":[{"key":"Veraenderungskompetenz","weight":1}]},
+      {"id":"B","label":"Unternehmerisches Denken & Innovationsgeist – Ich entwickle mit meiner Gruppe ein Pilotprojekt, präsentiere Nutzenargumente und plane eine Feedbackrunde mit Schüler:innen.","skills":[{"key":"Unternehmerisches_Denken_und_Innovationsgeist","weight":1}]},
+      {"id":"C","label":"Dialog- & Konfliktfähigkeit – Ich leite Diskussionen sachlich, gehe auf Einwände ein und sorge dafür, dass jede Perspektive gehört wird.","skills":[{"key":"Dialog_und_Konfliktfaehigkeit","weight":1}]}
+    ]
+  },
+  {
+    "id":"LEHR_12",
+    "text":"Schüler:innen mit geringer Motivation im Fachunterricht Situation: In deiner Klasse scheinen viele Schüler:innen keine Lust auf das Fach zu haben. Du merkst, dass Frontalunterricht wenig bewirkt, und suchst neue Wege, um Interesse zu wecken.",
+    "options":[
+      {"id":"A","label":"Eigenverantwortung & Selbstwirksamkeit – Ich lasse die Schüler:innen eigene Themen oder Fragestellungen wählen, um mehr Verantwortung für ihr Lernen zu übernehmen.","skills":[{"key":"Eigenverantwortung_und_Selbstwirksamkeit","weight":1}]},
+      {"id":"B","label":"Digital Literacy – Ich nutze interaktive Tools (z. B. Quiz, Umfragen, Lernplattformen), damit sie aktiv mitgestalten und sich selbst überprüfen können.","skills":[{"key":"Digital_Literacy","weight":1}]},
+      {"id":"C","label":"Kreativität – Ich entwickle handlungsorientierte Aufgaben, z. B. kleine Projekte oder Wettbewerbe, um das Lernen erlebbarer zu machen.","skills":[{"key":"Kreativitaet","weight":1}]}
+    ]
+  },
+  {
+    "id":"LEHR_13",
+    "text":"Ordnung im digitalen Lehrerzimmer Situation: Auf dem schulinternen Cloud-Laufwerk herrscht Chaos: alte Arbeitsblätter, doppelte Dateien, unklare Ordnernamen. Die Schulleitung bittet das Kollegium, mehr Struktur hineinzubringen.",
+    "options":[
+      {"id":"A","label":"Datenmanagement & digitale Ordnung – Ich entwickle ein klares Ordner-System mit Namenskonventionen (z. B. Fach_Klasse_Thema) und erkläre Kolleg:innen die Vorteile sauberer Dateistruktur.","skills":[{"key":"Datenmanagement","weight":1}]},
+      {"id":"B","label":"Digitale Kollaboration – Ich schlage vor, gemeinsam einheitliche Regeln für Dateiablagen zu erarbeiten und regelmäßig zu prüfen, ob sie eingehalten werden.","skills":[{"key":"Digitale_Kollaboration","weight":1}]},
+      {"id":"C","label":"Eigenverantwortung & Selbstwirksamkeit – Ich beginne selbst mit meiner Fachgruppe und zeige am Beispiel, wie produktiveres Arbeiten durch Ordnung funktioniert.","skills":[{"key":"Eigenverantwortung_und_Selbstwirksamkeit","weight":1}]}
+    ]
+  },
+  {
+    "id":"LEHR_14",
+    "text":"Schülerprojekt „Robotik trifft Umwelt“ Situation: Im Technikunterricht soll ein außerschulischer Wettbewerb vorbereitet werden. Die Aufgabe: einen kleinen Roboter entwickeln, der Müll sortieren kann. Viele Schüler:innen haben kaum Erfahrung mit Robotik.",
+    "options":[
+      {"id":"A","label":"Hardware-/Robotikentwicklung – Ich leite die Schüler:innen an, einfache Sensoren und Motoren zu verbauen, erkläre technische Zusammenhänge und fördere systematisches Testen.","skills":[{"key":"Hardware_Robotikentwicklung","weight":1}]},
+      {"id":"B","label":"Lösungsfähigkeit – Ich lasse die Gruppen auftretende Fehler eigenständig analysieren und an Verbesserungen arbeiten, statt sofort Lösungen vorzugeben.","skills":[{"key":"Loesungsfaehigkeit","weight":1}]},
+      {"id":"C","label":"Digitale Ethik & KI-Governance – Ich diskutiere mit den Schüler:innen, welche Grenzen Technik hat und welche Verantwortung wir bei automatisierten Systemen tragen.","skills":[{"key":"Digitale_Ethik_und_KI_Governance","weight":1}]}
+    ]
+  },
+  {
+    "id":"LEHR_15",
+    "text":"Notenvergabe unter Druck Situation: Kurz vor Zeugniskonferenzen bittet dich ein Kollege, die Note eines Schülers „etwas wohlwollender“ zu sehen, um Diskussionen mit den Eltern zu vermeiden. Du bist unsicher, ob das gerecht ist.",
+    "options":[
+      {"id":"A","label":"Werteorientiertes Handeln – Ich bleibe bei meiner fachlich begründeten Bewertung und erkläre transparent, warum ich die Note nicht anpasse.","skills":[{"key":"Werteorientiertes_Handeln","weight":1}]},
+      {"id":"B","label":"Urteilsfähigkeit – Ich prüfe die Gesamtleistung, vergleiche mit Kriterien und bespreche offen mit dem Kollegen, welche Folgen eine Änderung hätte.","skills":[{"key":"Urteilsfaehigkeit","weight":1}]},
+      {"id":"C","label":"Resilienz – Ich lasse mich nicht unter Druck setzen, sondern hole mir ggf. Rückendeckung von der Schulleitung, um die Situation professionell zu klären.","skills":[{"key":"Resilienz","weight":1}]}
+    ]
+  },
+  {
+    "id":"LEHR_16",
+    "text":"Ideenwettbewerb „Unsere Schule 2030“ Situation: Die Stadt schreibt einen Wettbewerb aus: Schulen sollen innovative Konzepte für die Zukunft des Lernens einreichen. Du möchtest mit Schüler:innen teilnehmen.",
+    "options":[
+      {"id":"A","label":"Unternehmerisches Denken & Innovationsgeist – Ich entwickle gemeinsam mit Schüler:innen eine Vision für „Lernen 2030“ und präsentiere sie überzeugend vor einer Jury.","skills":[{"key":"Unternehmerisches_Denken_und_Innovationsgeist","weight":1}]},
+      {"id":"B","label":"Kreativität – Ich leite die Klasse an, ihre Ideen visuell darzustellen – z. B. in Modellen, Storyboards oder kurzen Videos.","skills":[{"key":"Kreativitaet","weight":1}]},
+      {"id":"C","label":"Nutzerzentriertes Design – Ich beziehe Schüler:innen, Eltern und Kolleg:innen in die Konzeptentwicklung ein, um ein echtes Schul-Erlebnis der Zukunft zu entwerfen.","skills":[{"key":"Nutzerzentriertes_Design","weight":1}]}
+    ]
+  },
+  {
+    "id":"LEHR_17",
+    "text":"KI-unterstütztes Feedback an Schüler:innen Situation: Du möchtest ein KI-Tool testen, das automatisch Feedback zu Aufsätzen gibt. Du willst aber sicherstellen, dass Schüler:innen den Lernprozess verstehen und nicht nur die KI bewerten lassen.",
+    "options":[
+      {"id":"A","label":"Prompt Engineering – Ich formuliere gezielt Eingaben, die die KI zu konstruktivem, lernförderlichem Feedback anregen, z. B. „Gib drei Verbesserungsvorschläge mit Begründung in einfacher Sprache.“","skills":[{"key":"Prompt_Engineering","weight":1}]},
+      {"id":"B","label":"KI-gestütztes Lernen & Weiterbildung – Ich lasse die Schüler:innen ihr KI-Feedback mit meinem vergleichen und reflektieren, was sie daraus lernen.","skills":[{"key":"KI_gestuetztes_Lernen_und_Weiterbildung","weight":1}]},
+      {"id":"C","label":"Digitale Ethik & KI-Governance – Ich bespreche mit der Klasse Datenschutz- und Bias-Fragen: Wer hat Zugriff auf die Texte, und wie fair ist KI-Bewertung?","skills":[{"key":"Digitale_Ethik_und_KI_Governance","weight":1}]}
+    ]
+  },
+  {
+    "id":"LEHR_18",
+    "text":"Konflikt im Kollegium – Kommunikationskultur Situation: Zwei Kolleg:innen geraten in der Pause lautstark aneinander, weil die Raumplanung nicht funktioniert hat. Du bist Fachvorsitzende:r und wirst gebeten zu vermitteln.",
+    "options":[
+      {"id":"A","label":"Dialog- & Konfliktfähigkeit – Ich führe ein moderiertes Gespräch, lasse beide Seiten ausreden und suche gemeinsam mit ihnen nach einer verbindlichen Lösung.","skills":[{"key":"Dialog_und_Konfliktfaehigkeit","weight":1}]},
+      {"id":"B","label":"Urteilsfähigkeit – Ich kläre zuerst sachlich, welche Missverständnisse entstanden sind, und analysiere, wo organisatorische Fehler liegen.","skills":[{"key":"Urteilsfaehigkeit","weight":1}]},
+      {"id":"C","label":"Werteorientiertes Handeln – Ich betone respektvollen Umgang als verbindlichen Teil der Schulkultur und verweise auf gemeinsame Ziele statt Schuldfragen.","skills":[{"key":"Werteorientiertes_Handeln","weight":1}]}
+    ]
+  },
+  {
+    "id":"LEHR_19",
+    "text":"Elterngespräch über Lernrückstände Situation: Die Eltern eines Schülers beschweren sich, dass ihr Sohn im Distanzunterricht zu wenig Unterstützung bekommen habe. Sie erwarten, dass du die Noten nachträglich anpasst.",
+    "options":[
+      {"id":"A","label":"Dialog- & Konfliktfähigkeit – Ich höre die Eltern ruhig an, erkläre die Bewertung transparent und zeige Möglichkeiten auf, wie der Schüler künftig unterstützt werden kann.","skills":[{"key":"Dialog_und_Konfliktfaehigkeit","weight":1}]},
+      {"id":"B","label":"Resilienz – Ich lasse mich von der emotionalen Situation nicht unter Druck setzen, sondern halte den Fokus auf Lösungen.","skills":[{"key":"Resilienz","weight":1}]},
+      {"id":"C","label":"Werteorientiertes Handeln – Ich bleibe fair und ehrlich in meiner Bewertung, auch wenn das Gespräch unangenehm ist.","skills":[{"key":"Werteorientiertes_Handeln","weight":1}]}
+    ]
+  },
+  {
+    "id":"LEHR_20",
+    "text":"Störungen im Unterricht – Klasse 8 ist laut und unkonzentriert Situation: Eine Unterrichtsstunde gerät aus dem Ruder. Viele Schüler:innen rufen dazwischen, kaum jemand arbeitet konzentriert.",
+    "options":[
+      {"id":"A","label":"Lösungsfähigkeit – Ich halte kurz inne, verändere spontan die Methode (z. B. Gruppenarbeit, Bewegungseinheit) und hole die Klasse aktiv zurück.","skills":[{"key":"Loesungsfaehigkeit","weight":1}]},
+      {"id":"B","label":"Selbstbewusstsein – Ich bleibe souverän, auch wenn es laut ist, und setze meine Regeln konsequent durch.","skills":[{"key":"Selbstbewusstsein","weight":1}]},
+      {"id":"C","label":"Urteilsfähigkeit – Ich analysiere später, ob meine Unterrichtsplanung oder äußere Faktoren (z. B. Tageszeit, Themenwahl) zur Unruhe beigetragen haben.","skills":[{"key":"Urteilsfaehigkeit","weight":1}]}
+    ]
+  },
+  {
+    "id":"LEHR_21",
+    "text":"Fortbildung zur Digitalisierung Situation: Die Schule bietet eine interne Fortbildung zu digitalen Tools an. Viele Kolleg:innen nehmen teil, du hast aber das Gefühl, ohnehin schon viel zu wissen.",
+    "options":[
+      {"id":"A","label":"KI-gestütztes Lernen & Weiterbildung – Ich nutze die Fortbildung, um mein Wissen zu vertiefen, neue Funktionen zu testen und aktiv Fragen zu stellen.","skills":[{"key":"KI_gestuetztes_Lernen_und_Weiterbildung","weight":1}]},
+      {"id":"B","label":"Weltoffenheit – Ich interessiere mich für die Sichtweisen anderer Fachrichtungen und überlege, wie digitale Tools fächerübergreifend wirken könnten.","skills":[{"key":"Weltoffenheit","weight":1}]},
+      {"id":"C","label":"Eigenverantwortung & Selbstwirksamkeit – Ich melde mich anschließend freiwillig als Multiplikator:in, um mein Wissen weiterzugeben.","skills":[{"key":"Eigenverantwortung_und_Selbstwirksamkeit","weight":1}]}
+    ]
+  },
+  {
+    "id":"LEHR_22",
+    "text":"Schüler:innen-Feedback zu Unterrichtsmethoden Situation: Deine Schulleitung bittet alle Lehrkräfte, einmal im Halbjahr anonymes Feedback von Schüler:innen einzuholen. Du bist unsicher, ob dich das eher demotiviert oder bereichert.",
+    "options":[
+      {"id":"A","label":"Eigenverantwortung & Selbstwirksamkeit – Ich sehe das Feedback als Chance zur Weiterentwicklung und plane danach gezielte Anpassungen.","skills":[{"key":"Eigenverantwortung_und_Selbstwirksamkeit","weight":1}]},
+      {"id":"B","label":"Urteilsfähigkeit – Ich differenziere konstruktiv: Was ist berechtigt, was eher subjektiv? So nutze ich die Rückmeldung gezielt.","skills":[{"key":"Urteilsfaehigkeit","weight":1}]},
+      {"id":"C","label":"Resilienz – Ich nehme Kritik nicht persönlich, sondern als Anlass für fachliches Wachstum.","skills":[{"key":"Resilienz","weight":1}]}
+    ]
+  },
+  {
+    "id":"LEHR_23",
+    "text":"Nachhaltigkeitsprojekt an der Schule Situation: Eine Schüler:innenvertretung möchte das Thema Nachhaltigkeit stärker in der Schule verankern. Du wirst gefragt, ob du ein Projekt begleitest.",
+    "options":[
+      {"id":"A","label":"Unternehmerisches Denken & Innovationsgeist – Ich unterstütze die SV, ein Konzept für „grüne Schule“ zu entwickeln und Fördergelder zu beantragen.","skills":[{"key":"Unternehmerisches_Denken_und_Innovationsgeist","weight":1}]},
+      {"id":"B","label":"Kreativität – Ich rege dazu an, Recycling-Ideen im Kunst- oder Technikunterricht praktisch umzusetzen.","skills":[{"key":"Kreativitaet","weight":1}]},
+      {"id":"C","label":"Veränderungskompetenz – Ich helfe, das Projekt in bestehende Strukturen (z. B. Schulfeste, AGs) zu integrieren, damit es nachhaltig bleibt.","skills":[{"key":"Veraenderungskompetenz","weight":1}]}
+    ]
+  },
+  {
+    "id":"LEHR_24",
+    "text":"Teamarbeit im Fachbereich Situation: In deiner Fachkonferenz gibt es Uneinigkeit über die Prüfungsform im kommenden Schuljahr. Einige wollen Projektarbeit, andere klassische Tests.",
+    "options":[
+      {"id":"A","label":"Dialog- & Konfliktfähigkeit – Ich leite eine strukturierte Diskussion, fasse Positionen zusammen und moderiere einen Kompromiss.","skills":[{"key":"Dialog_und_Konfliktfaehigkeit","weight":1}]},
+      {"id":"B","label":"Digital Literacy – Ich schlage vor, verschiedene Prüfungsformate digital zu dokumentieren, um die Ergebnisse vergleichbar zu machen.","skills":[{"key":"Digital_Literacy","weight":1}]},
+      {"id":"C","label":"Werteorientiertes Handeln – Ich achte darauf, dass Entscheidungen transparent getroffen werden und alle gehört werden.","skills":[{"key":"Werteorientiertes_Handeln","weight":1}]}
+    ]
+  },
+  {
+    "id":"LEHR_25",
+    "text":"Persönliche Weiterentwicklung als Lehrkraft Situation: Du merkst, dass dir nach vielen Schuljahren die Motivation fehlt. Routine ersetzt Neugier. Du überlegst, wie du dich wieder inspirieren lassen kannst.",
+    "options":[
+      {"id":"A","label":"Selbstbewusstsein – Ich reflektiere meine Stärken und was mich ursprünglich an meinem Beruf begeistert hat, um neue Energie zu gewinnen.","skills":[{"key":"Selbstbewusstsein","weight":1}]},
+      {"id":"B","label":"KI-Datenkompetenz – Ich erkunde aktuelle Entwicklungen in Bildungstechnologien und probiere neue Tools aus, um Unterricht frisch zu gestalten.","skills":[{"key":"KI_Datenkompetenz","weight":1}]},
+      {"id":"C","label":"Innovationskompetenz – Ich entwickle eigene Unterrichtsideen oder Lehrmaterialien und teste sie mit Kolleg:innen – als Beitrag zur Schulentwicklung.","skills":[{"key":"Innovationskompetenz","weight":1}]}
+    ]
+  },
+  {
+    "id":"LEHR_26",
+    "text":"Datenschutz im Schulalltag Situation: Die Schulleitung bittet alle Lehrkräfte, Fotos und Arbeitsproben der Schüler:innen für den Tag der offenen Tür digital bereitzustellen. Du stellst fest, dass einige Kolleg:innen ungefragt Bilder in WhatsApp-Gruppen teilen.",
+    "options":[
+      {"id":"A","label":"Digitale Infrastruktur & Cybersicherheit – Ich erkläre dem Kollegium, warum sensible Daten nur auf schulinternen Servern gespeichert werden dürfen, und schlage sichere Alternativen vor.","skills":[{"key":"Digitale_Infrastruktur_und_Cybersicherheit","weight":1}]},
+      {"id":"B","label":"Werteorientiertes Handeln – Ich bleibe bei meiner Haltung, keine personenbezogenen Daten ohne Einwilligung zu teilen, auch wenn es unbequemer ist.","skills":[{"key":"Werteorientiertes_Handeln","weight":1}]},
+      {"id":"C","label":"Urteilsfähigkeit – Ich recherchiere kurz die schulischen Datenschutzrichtlinien und bespreche das Vorgehen offen in der Dienstbesprechung.","skills":[{"key":"Urteilsfaehigkeit","weight":1}]}
+    ]
+  },
+  {
+    "id":"LEHR_27",
+    "text":"Interkulturelles Missverständnis mit Eltern Situation: Die Eltern eines neu zugezogenen Schülers erscheinen nicht zu vereinbarten Gesprächen. Später erfährst du, dass sie aufgrund sprachlicher Barrieren unsicher sind.",
+    "options":[
+      {"id":"A","label":"Interkulturelle Kommunikation – Ich organisiere mit Unterstützung eines Sprachmittlers ein neues Gespräch und nutze einfache Sprache.","skills":[{"key":"Interkulturelle_Kommunikation","weight":1}]},
+      {"id":"B","label":"Freundlichkeit (Kindness) – Ich schreibe eine wertschätzende Nachricht, in der ich Verständnis zeige und Hilfe anbiete, z. B. über Schulsozialarbeit.","skills":[{"key":"Freundlichkeit","weight":1}]},
+      {"id":"C","label":"Weltoffenheit – Ich rege an, Elternabende künftig mehrsprachig oder mit Visualisierungen zu gestalten.","skills":[{"key":"Weltoffenheit","weight":1}]}
+    ]
+  },
+  {
+    "id":"LEHR_28",
+    "text":"Cybermobbing in der Klasse Situation: Du bekommst mit, dass in einer Chatgruppe beleidigende Memes über eine Mitschülerin kursieren. Einige Schüler:innen sagen: „Das war doch nur Spaß.“",
+    "options":[
+      {"id":"A","label":"Digitale Ethik & KI-Governance – Ich bespreche mit der Klasse, welche Verantwortung jede:r online trägt und welche rechtlichen Grenzen gelten.","skills":[{"key":"Digitale_Ethik_und_KI_Governance","weight":1}]},
+      {"id":"B","label":"Dialog- & Konfliktfähigkeit – Ich führe ein Gespräch mit den Beteiligten, um Empathie zu fördern und Regeln für den digitalen Umgang zu vereinbaren.","skills":[{"key":"Dialog_und_Konfliktfaehigkeit","weight":1}]},
+      {"id":"C","label":"Werteorientiertes Handeln – Ich melde den Vorfall an die Schulleitung und sorge dafür, dass das Opfer Unterstützung erhält.","skills":[{"key":"Werteorientiertes_Handeln","weight":1}]}
+    ]
+  },
+  {
+    "id":"LEHR_29",
+    "text":"Fehlgeschlagenes Unterrichtsexperiment Situation: Du wolltest im Physikunterricht ein neues Experiment ausprobieren. Es misslingt – vor der gesamten Klasse. Die Schüler:innen lachen.",
+    "options":[
+      {"id":"A","label":"Resilienz – Ich bleibe gelassen, beziehe den Fehler humorvoll ein und erkläre, dass Experimente auch scheitern dürfen.","skills":[{"key":"Resilienz","weight":1}]},
+      {"id":"B","label":"Selbstbewusstsein – Ich zeige souverän, dass Fehler Teil des Lernprozesses sind, und motiviere die Schüler:innen, eigene Versuche kritisch zu hinterfragen.","skills":[{"key":"Selbstbewusstsein","weight":1}]},
+      {"id":"C","label":"Agilität – Ich improvisiere und leite spontan ein Lern-Gespräch über Hypothesen und Fehlersuche.","skills":[{"key":"Agilitaet","weight":1}]}
+    ]
+  },
+  {
+    "id":"LEHR_30",
+    "text":"KI-gestützte Notenverwaltung Situation: Die Schule testet ein neues Programm, das Lernstände automatisch auswertet und Noten vorschlägt. Einige Lehrkräfte zweifeln an der Objektivität.",
+    "options":[
+      {"id":"A","label":"KI-Datenkompetenz – Ich prüfe, auf welchen Parametern das System basiert, und kontrolliere, ob Bewertungen nachvollziehbar sind.","skills":[{"key":"KI_Datenkompetenz","weight":1}]},
+      {"id":"B","label":"Urteilsfähigkeit – Ich analysiere kritisch, wo KI unterstützen darf und wo pädagogische Verantwortung beim Menschen bleibt.","skills":[{"key":"Urteilsfaehigkeit","weight":1}]},
+      {"id":"C","label":"Veränderungskompetenz – Ich begleite den Pilotversuch aktiv, dokumentiere Erfahrungen und gebe konstruktives Feedback an die Schulleitung.","skills":[{"key":"Veraenderungskompetenz","weight":1}]}
+    ]
+  },
+  {
+    "id":"LEHR_31",
+    "text":"Schulnetzwerk-Ausfall mitten im Unterricht Situation: Während einer Präsentation fällt plötzlich das WLAN im gesamten Schulgebäude aus. Deine Klasse soll eigentlich Online-Recherche betreiben.",
+    "options":[
+      {"id":"A","label":"Digitale Infrastruktur & Cybersicherheit – Ich bleibe ruhig, erkläre kurz die technischen Grundlagen und die Bedeutung von Backup-Systemen und leite zu einer Offline-Methode über.","skills":[{"key":"Digitale_Infrastruktur_und_Cybersicherheit","weight":1}]},
+      {"id":"B","label":"Agilität – Ich improvisiere: Die Klasse sammelt Ideen auf Papier und reflektiert anschließend, wie stark digitale Abhängigkeit das Lernen beeinflusst.","skills":[{"key":"Agilitaet","weight":1}]},
+      {"id":"C","label":"Lösungsfähigkeit – Ich nutze die Situation als Problemfall: „Wie kann Unterricht ohne Internet funktionieren?“ – und lasse die Schüler:innen Konzepte entwickeln.","skills":[{"key":"Loesungsfaehigkeit","weight":1}]}
+    ]
+  },
+  {
+    "id":"LEHR_32",
+    "text":"Umgang mit KI-generierten Schülerarbeiten Situation: Eine 10.-Klässlerin reicht ein Kunstprojekt ein, das sichtlich mit einem KI-Bildgenerator erstellt wurde. Es ist kreativ, aber die Eigenleistung ist unklar.",
+    "options":[
+      {"id":"A","label":"Digitale Ethik & KI-Governance – Ich bespreche offen, wo die Grenze zwischen eigener Idee und automatisierter Erstellung liegt.","skills":[{"key":"Digitale_Ethik_und_KI_Governance","weight":1}]},
+      {"id":"B","label":"Urteilsfähigkeit – Ich entscheide, die Arbeit nicht abzuwerten, sondern als Anlass zu nutzen, den kreativen Prozess zu reflektieren.","skills":[{"key":"Urteilsfaehigkeit","weight":1}]},
+      {"id":"C","label":"Innovationskompetenz – Ich erarbeite mit der Klasse neue Bewertungskriterien für Projekte mit KI-Unterstützung.","skills":[{"key":"Innovationskompetenz","weight":1}]}
+    ]
+  },
+  {
+    "id":"LEHR_33",
+    "text":"Schüler:innen übernehmen Verantwortung Situation: Du willst, dass deine 8. Klasse stärker selbst organisiert arbeitet. In einer Projektphase sollen sie Ablauf, Rollen und Zeitplan eigenständig gestalten.",
+    "options":[
+      {"id":"A","label":"Eigenverantwortung & Selbstwirksamkeit – Ich lasse die Klasse den Projektplan selbst erarbeiten und begleite sie nur beratend.","skills":[{"key":"Eigenverantwortung_und_Selbstwirksamkeit","weight":1}]},
+      {"id":"B","label":"Dialog- & Konfliktfähigkeit – Ich beobachte die Gruppenarbeit, greife moderierend ein, wenn Spannungen entstehen.","skills":[{"key":"Dialog_und_Konfliktfaehigkeit","weight":1}]},
+      {"id":"C","label":"Veränderungskompetenz – Ich reflektiere danach mit der Klasse, was funktioniert hat und wie sie Verantwortung künftig noch besser übernehmen können.","skills":[{"key":"Veraenderungskompetenz","weight":1}]}
+    ]
+  },
+  {
+    "id":"LEHR_34",
+    "text":"Schule als Lernort der Zukunft Situation: Auf einer pädagogischen Konferenz sollen neue Unterrichtsformen vorgestellt werden. Du bist gebeten, ein Beispiel aus deiner Praxis zu präsentieren.",
+    "options":[
+      {"id":"A","label":"Unternehmerisches Denken & Innovationsgeist – Ich entwickle eine kurze Präsentation, die zeigt, wie eigeninitiatives Denken und Lernprojekte Schüler:innen motivieren.","skills":[{"key":"Unternehmerisches_Denken_und_Innovationsgeist","weight":1}]},
+      {"id":"B","label":"Kreativität – Ich visualisiere meine Ideen mit anschaulichen Beispielen, Videos oder Schülerprodukten.","skills":[{"key":"Kreativitaet","weight":1}]},
+      {"id":"C","label":"Selbstbewusstsein – Ich nutze die Gelegenheit, um meine Erfahrungen selbstsicher im Kollegium einzubringen.","skills":[{"key":"Selbstbewusstsein","weight":1}]}
+    ]
+  },
+  {
+    "id":"LEHR_35",
+    "text":"Künstliche Intelligenz in der Schulorganisation Situation: Die Schulleitung prüft, ob KI-gestützte Tools (z. B. Terminplanung, Stundenplanoptimierung, Elternkommunikation) eingesetzt werden sollen. Du darfst im Testteam mitarbeiten.",
+    "options":[
+      {"id":"A","label":"KI-Datenkompetenz – Ich analysiere, welche Daten die Tools verarbeiten, und prüfe, ob sie DSGVO-konform sind.","skills":[{"key":"KI_Datenkompetenz","weight":1}]},
+      {"id":"B","label":"Innovationskompetenz – Ich teste das Tool, dokumentiere Nutzen und Risiken und erarbeite mit Kolleg:innen Vorschläge zur Integration in den Schulalltag.","skills":[{"key":"Innovationskompetenz","weight":1}]},
+      {"id":"C","label":"Digitale Kollaboration – Ich stimme mich mit Verwaltung und Kollegium ab, um das System gemeinsam sinnvoll einzuführen.","skills":[{"key":"Digitale_Kollaboration","weight":1}]}
+    ]
+  }
+];
+
+/* ===== State ===== */
+const allSkills = Object.values(CATEGORIES).flat();
+const initialScores = allSkills.reduce((acc,k)=> (acc[k]=0, acc), {});
+const STORAGE_KEY = "fs360_scores_lehrkraefte";
+const STORAGE_QIDX = "fs360_qidx_lehrkraefte";
+const BREAKS = [9,18,26];
+
+function loadState(){
+  try{
+    const raw = sessionStorage.getItem(STORAGE_KEY);
+    const qraw = sessionStorage.getItem(STORAGE_QIDX);
+    const scores = raw ? JSON.parse(raw) : {...initialScores};
+    const idx = qraw ? parseInt(qraw,10) : 0;
+    return { scores, idx };
+  }catch(e){ return { scores: {...initialScores}, idx: 0 }; }
+}
+function saveState(scores, idx){
+  sessionStorage.setItem(STORAGE_KEY, JSON.stringify(scores));
+  sessionStorage.setItem(STORAGE_QIDX, String(idx));
+}
+function resetState(){
+  sessionStorage.removeItem(STORAGE_KEY);
+  sessionStorage.removeItem(STORAGE_QIDX);
+}
+function percent(n,d){ return d? Math.round((n/d)*100) : 0; }
+
+/* ===== Silbentrennung / Umbruch-Helfer ===== */
+function softHyphenate(str){
+  const SHY = "\u00AD";
+  return str
+    .replace(/Interkulturelle/g, "Inter"+SHY+"kulturelle")
+    .replace(/Kommunikation/g, "Kommu"+SHY+"nikation")
+    .replace(/Werteorientiertes/g, "Werte"+SHY+"orientiertes")
+    .replace(/Eigenverantwortung/g, "Eigen"+SHY+"verantwortung")
+    .replace(/Selbstwirksamkeit/g, "Selbst"+SHY+"wirksamkeit")
+    .replace(/Innovationskompetenz/g, "Innovations"+SHY+"kompetenz")
+    .replace(/Veränderungskompetenz/g, "Ver"+SHY+"änderungs"+SHY+"kompetenz")
+    .replace(/Lösungsfähigkeit/g, "Lösungs"+SHY+"fähigkeit")
+    .replace(/Urteilsfähigkeit/g, "Urteils"+SHY+"fähigkeit")
+    .replace(/Cybersicherheit/g, "Cyber"+SHY+"sicherheit")
+    .replace(/Nutzerzentriertes/g, "Nutzer"+SHY+"zentriertes")
+    .replace(/Robotikentwicklung/g, "Robotik"+SHY+"entwicklung")
+    .replace(/KI-Datenkompetenz/g, "KI-Daten"+SHY+"kompetenz")
+    .replace(/Weltoffenheit/g, "Welt"+SHY+"offenheit");
+}
+function formatSkillLabel(key){
+  const map = SKILL_LABELS[key] || key.replaceAll("_"," ");
+  return softHyphenate(map);
+}
+// 2-Zeilen-Text für Sunburst
+function wrapForSunburst(label){
+  const clean = label.replace(/\s+/g," ").trim();
+  const preferred = [" & ", " - ", " / "];
+  for (const sep of preferred){
+    const i = clean.indexOf(sep);
+    if (i > 0 && clean.length > 18){
+      return clean.slice(0, i).trim() + "<br>" + clean.slice(i).trim();
+    }
+  }
+  const limit = 22;
+  if (clean.length > limit){
+    const cut = clean.lastIndexOf(" ", limit);
+    if (cut > 0) return clean.slice(0, cut) + "<br>" + clean.slice(cut+1);
+  }
+  return clean;
+}
+
+/* ===== DOM ===== */
+const introEl=document.getElementById("intro"), breakEl=document.getElementById("break"), quizEl=document.getElementById("quiz"), resEl=document.getElementById("results");
+const qTextEl=document.getElementById("qText"), optionsEl=document.getElementById("options"), progressText=document.getElementById("progressText"), pbar=document.getElementById("pbar");
+const errEl=document.getElementById("error"), prevBtn=document.getElementById("prevBtn"), nextBtn=document.getElementById("nextBtn");
+const breakNextBtn=document.getElementById("breakNextBtn"), copyBtn=document.getElementById("copyBtn"), resetBtn=document.getElementById("resetBtn"), pdfBtn=document.getElementById("pdfBtn");
+const estTime=document.getElementById("estTime"), countScenarios=document.getElementById("countScenarios"), skipToResults=document.getElementById("skipToResults");
+
+let state = loadState();
+
+function show(el){ el.classList.remove("hidden"); }
+function hide(el){ el.classList.add("hidden"); }
+
+function updateProgress(){
+  const total=SCENARIOS.length||1;
+  const cur=state.idx;
+  progressText.textContent=`Szenario ${cur+1} / ${total}`;
+  pbar.style.width=percent(cur,total)+"%";
+}
+
+function renderQuestion(){
+  const idx=state.idx;
+  const sc=SCENARIOS[idx];
+  updateProgress();
+  try{ setBgFromIndex(idx||0); }catch(e){}
+  qTextEl.textContent = sc?.text || "Keine Szenarien gefunden.";
+  optionsEl.innerHTML=""; errEl.textContent="";
+
+  (sc?.options||[]).forEach((opt,i)=>{
+    const id=`q${idx}_opt${i}`;
+    const wrap=document.createElement("label");
+    wrap.className="option";
+    wrap.setAttribute("for",id);
+
+    const badge=document.createElement("div");
+    badge.className="optIndex";
+    badge.textContent=(i+1);
+
+    const input=document.createElement("input");
+    input.type="radio"; input.name=`q${idx}`; input.id=id; input.value=opt.id;
+    input.dataset.skills=JSON.stringify(opt.skills||[]);
+    input.setAttribute("aria-label",opt.label);
+    input.style.marginTop="0.15rem";
+
+    const span=document.createElement("span");
+    span.className="txt"; span.textContent=opt.label;
+
+    wrap.appendChild(badge);
+    wrap.appendChild(input);
+    wrap.appendChild(span);
+    optionsEl.appendChild(wrap);
+  });
+
+  prevBtn.disabled = idx===0;
+  nextBtn.textContent = idx===(SCENARIOS.length-1) ? "Auswertung anzeigen" : "Weiter";
+}
+
+function applyAnswerAndNext(){
+  const idx=state.idx;
+  const selected=document.querySelector(`input[name="q${idx}"]:checked`);
+  if(!selected){ errEl.textContent="Bitte wählen Sie eine Option aus."; return; }
+  errEl.textContent="";
+  const scores=state.scores;
+  try{
+    const skills=JSON.parse(selected.dataset.skills||"[]");
+    if(Array.isArray(skills)){
+      skills.forEach(s=>{
+        if(s && s.key && (s.weight || s.weight===0) && scores.hasOwnProperty(s.key)){
+          scores[s.key]+=Number(s.weight)||0;
+        }
+      });
+    }
+  }catch(e){}
+
+  const nextIdx=idx+1;
+  saveState(scores,nextIdx);
+  if(nextIdx<SCENARIOS.length){
+    state.idx=nextIdx;
+    if(BREAKS.includes(nextIdx)){ hide(quizEl); show(breakEl); }
+    else { renderQuestion(); }
+  } else { renderResults(); }
+}
+
+function goPrev(){
+  if(state.idx>0){
+    state.idx-=1;
+    saveState(state.scores,state.idx);
+    renderQuestion();
+  }
+}
+
+/* ===== Farben / Utilities ===== */
+function getCssVar(name){
+  return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+}
+function shadeColor(hex, t){
+  const ctx = document.createElement('canvas').getContext('2d');
+  ctx.fillStyle = hex;
+  const rgb = ctx.fillStyle;
+  const m = rgb.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
+  if(!m) return hex;
+  let [r,g,b] = [parseInt(m[1],10), parseInt(m[2],10), parseInt(m[3],10)];
+  r/=255; g/=255; b/=255;
+  const max=Math.max(r,g,b), min=Math.min(r,g,b);
+  let h,s,l=(max+min)/2;
+  if(max===min){ h=s=0; } else {
+    const d=max-min;
+    s = l>0.5? d/(2-max-min) : d/(max+min);
+    switch(max){ case r: h=(g-b)/d+(g<b?6:0); break;
+                 case g: h=(b-r)/d+2; break;
+                 default: h=(r-g)/d+4; }
+    h/=6;
+  }
+  l = Math.min(1, Math.max(0, l + t));
+  let r2,g2,b2;
+  if(s===0){ r2=g2=b2=l; }
+  else{
+    const q = l<0.5? l*(1+s) : l+s-l*s;
+    const p = 2*l-q;
+    const hue2rgb=(p,q,t)=>{ if(t<0)t+=1; if(t>1)t-=1;
+      if(t<1/6)return p+(q-p)*6*t; if(t<1/2)return q; if(t<2/3)return p+(q-p)*(2/3 - t)*6; return p; };
+    r2=hue2rgb(p,q,h+1/3); g2=hue2rgb(p,q,h); b2=hue2rgb(p,q,h-1/3);
+  }
+  r2=Math.round(r2*255); g2=Math.round(g2*255); b2=Math.round(b2*255);
+  return `rgb(${r2}, ${g2}, ${b2})`;
+}
+
+/* ===== Ergebnisse rendern ===== */
+function renderResults(){
+  hide(introEl); hide(quizEl); hide(breakEl); show(resEl);
+  try{ setBgFromIndex(SCENARIOS.length||0); }catch(e){}
+  const scores=state.scores;
+
+  const labels=[], parents=[], values=[], texts=[];
+  Object.keys(CATEGORIES).forEach(cat=>{
+    const pretty = cat.replaceAll("_"," ");
+    const skills=CATEGORIES[cat];
+    const catSum=skills.reduce((sum,sk)=>sum+(scores[sk]||0),0);
+    if(catSum>0){
+      labels.push(pretty); parents.push(""); values.push(catSum);
+      texts.push(wrapForSunburst(pretty));
+    }
+    skills.forEach(sk=>{
+      const v=scores[sk]||0;
+      if(v>0){
+        const raw = SKILL_LABELS[sk] || sk.replaceAll("_"," ");
+        labels.push(raw); parents.push(pretty); values.push(v);
+        texts.push(wrapForSunburst(raw));
+      }
+    });
+  });
+  if(values.length===0){ labels.push("Keine Antworten"); parents.push(""); values.push(1); texts.push("Keine Antworten"); }
+
+  const cTech    = getCssVar('--cat-tech')    || '#234B59';
+  const cDigi    = getCssVar('--cat-digi')    || '#93B7BE';
+  const cClassic = getCssVar('--cat-classic') || '#F5C396';
+  const cTrans   = getCssVar('--cat-trans')   || '#78290F';
+
+  const catColorMap = new Map([
+    ["Technologische Kompetenzen", cTech],
+    ["Digitale Schluesselkompetenzen", cDigi],
+    ["Klassische Kompetenzen", cClassic],
+    ["Transformative Kompetenzen", cTrans]
+  ]);
+
+  const colors = labels.map((lbl, i) => {
+    if (parents[i]==="") return catColorMap.get(lbl) || cTech; // Kategorie
+    const base = catColorMap.get(parents[i]) || cTech;         // Skill -> Schattierung
+    return shadeColor(base, 0.12 * (i % 5));
+  });
+
+  Plotly.newPlot("chart", [{
+    type:"sunburst",
+    labels, parents, values, branchvalues:"total",
+    text: texts, texttemplate: "%{text}",
+    hovertemplate:"%{label}: %{value}<extra></extra>",
+    insidetextorientation:"radial",
+    marker:{ colors }
+  }], {
+    margin:{l:0,r:0,t:0,b:0},
+    paper_bgcolor:"rgba(0,0,0,0)",
+    plot_bgcolor:"rgba(0,0,0,0)",
+    uniformtext:{ minsize:10, mode:"hide" }
+  }, {displayModeBar:false,responsive:true});
+
+  // Tabelle
+  const tableWrap=document.getElementById("tableWrap");
+  const rows=Object.values(CATEGORIES).flat().map(sk=>`<tr><td>${formatSkillLabel(sk)}</td><td>${scores[sk]||0}</td></tr>`).join("");
+  tableWrap.innerHTML=`<table aria-describedby="res-h"><thead><tr><th>Skill</th><th>Punkte</th></tr></thead><tbody>${rows}</tbody></table>`;
+}
+
+/* ===== Events ===== */
+document.getElementById("startBtn").addEventListener("click",()=>{ hide(introEl); show(quizEl); if(countScenarios) countScenarios.textContent=SCENARIOS.length; renderQuestion(); });
+document.getElementById("skipToResults").addEventListener("click",()=>{ renderResults(); });
+document.getElementById("nextBtn").addEventListener("click",applyAnswerAndNext);
+document.getElementById("prevBtn").addEventListener("click",goPrev);
+document.getElementById("breakNextBtn").addEventListener("click",()=>{ hide(breakEl); show(quizEl); renderQuestion(); });
+document.getElementById("resetBtn").addEventListener("click",()=>{ resetState(); state=loadState(); hide(resEl); show(introEl); document.getElementById("title").focus?.(); });
+document.getElementById("copyBtn").addEventListener("click",()=>{
+  const scores=state.scores; let text="FutureSkills360° – Lehrkräfte Sek. I – Kurzreport\n\n";
+  Object.keys(CATEGORIES).forEach(cat=>{
+    text+=`# ${cat.replaceAll("_"," ")}\n`;
+    CATEGORIES[cat].forEach(sk=>{ text+=`- ${SKILL_LABELS[sk]||sk.replaceAll("_"," ")}: ${scores[sk]||0}\n`; });
+    text+="\n";
+  });
+  navigator.clipboard.writeText(text).then(()=>alert("Kurzreport in die Zwischenablage kopiert.")).catch(()=>alert("Kopieren nicht möglich. Bitte manuell markieren und kopieren."));
+});
+
+// Zeit-Schätzung
+(function(){
+  const total=SCENARIOS.length; const perQ=12; // ~12 Sek. pro Frage
+  const minutes=Math.max(1,Math.round((total*perQ)/60));
+  if(estTime) estTime.textContent=`geschätzt: ${total} Szenarien · ca. ${minutes} Min.`;
+  if(countScenarios) countScenarios.textContent=total;
+})();
+
+/* ===== PDF Export mit Hintergrundbild (Ergebnisbereich) ===== */
+document.getElementById("pdfBtn").addEventListener("click", async ()=>{
+  try{
+    const BG_SRC = "lehrkraefte_bg.webp";
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF({ unit:"pt", format:"a4" });
+    const pageWidth = doc.internal.pageSize.getWidth();
+    const pageHeight = doc.internal.pageSize.getHeight();
+    const margin = 40; let y = margin;
+
+    // Bild laden helper
+    const loadImage = (src) => new Promise((res) => {
+      const img = new Image(); img.crossOrigin="anonymous";
+      img.onload = ()=>res(img); img.onerror = ()=>res(null); img.src = src;
+    });
+    // "cover" auf Canvas mit Alpha
+    const makeBackgroundDataURL = async (src, w, h, alpha=0.08) => {
+      const img = await loadImage(src) || await loadImage("lehrkraefte_bg.jpg");
+      if(!img) return null;
+      const canvas = document.createElement("canvas");
+      canvas.width = Math.floor(w); canvas.height = Math.floor(h);
+      const ctx = canvas.getContext("2d");
+      ctx.fillStyle = "#ffffff"; ctx.fillRect(0,0,w,h);
+      const scale = Math.max(w / img.width, h / img.height);
+      const dw = img.width * scale, dh = img.height * scale;
+      const dx = (w - dw) / 2, dy = (h - dh) / 2;
+      ctx.globalAlpha = alpha; ctx.drawImage(img, dx, dy, dw, dh); ctx.globalAlpha = 1;
+      return canvas.toDataURL("image/png");
+    };
+
+    const bgDataUrl = await makeBackgroundDataURL(BG_SRC, pageWidth, pageHeight, 0.08);
+    if(bgDataUrl) doc.addImage(bgDataUrl, "PNG", 0, 0, pageWidth, pageHeight, "", "FAST");
+
+    // Kopf
+    doc.setFont("helvetica","bold"); doc.setFontSize(14);
+    doc.text("FutureSkills360° – Lehrkräfte Sek. I", margin, y); y += 18;
+    doc.setFont("helvetica","normal"); doc.setFontSize(10);
+    doc.text(new Date().toLocaleString(), margin, y); y += 12;
+
+    // Diagramm
+    const chartDiv = document.getElementById("chart");
+    const chartPng = await Plotly.toImage(chartDiv, { format:"png", width: 900, height: 600 });
+    const imgW = pageWidth - margin*2;
+    const imgH = imgW * (600/900);
+    y += 8;
+    doc.addImage(chartPng, "PNG", margin, y, imgW, imgH, "", "FAST");
+    y += imgH + 16;
+
+    // Tabelle (per html2canvas)
+    const table = document.getElementById("tableWrap");
+    const canvas = await html2canvas(table, { scale: 2, backgroundColor: null });
+    const tablePng = canvas.toDataURL("image/png");
+    const tW = pageWidth - margin*2;
+    const tH = tW * (canvas.height / canvas.width);
+
+    if (y + tH > pageHeight - margin) {
+      doc.addPage();
+      const bg2 = await makeBackgroundDataURL(BG_SRC, pageWidth, pageHeight, 0.08);
+      if(bg2) doc.addImage(bg2, "PNG", 0, 0, pageWidth, pageHeight, "", "FAST");
+      y = margin;
+    }
+    doc.addImage(tablePng, "PNG", margin, y, tW, tH, "", "FAST");
+
+    // Fußnote
+    doc.setFontSize(8);
+    doc.text("Hinweis: Werte basieren auf Ihren Antworten in dieser Sitzung. Keine Speicherung personenbezogener Daten.", margin, pageHeight - margin/2);
+
+    doc.save("FutureSkills360_Lehrkraefte_Ergebnis.pdf");
+  }catch(err){
+    alert("PDF-Export nicht möglich: " + (err?.message || err));
+  }
+});
+
+/* ===== Keyboard Shortcuts ===== */
+document.addEventListener("keydown", (e) => {
+  if (quizEl.classList.contains("hidden")) return; // nur im Quiz aktiv
+  if (["1","2","3"].includes(e.key)) {
+    const idx = parseInt(e.key, 10) - 1;
+    const inputs = optionsEl.querySelectorAll("input[type=radio]");
+    if (inputs[idx]) { inputs[idx].checked = true; inputs[idx].focus(); e.preventDefault(); }
+  }
+  if (e.key === "Enter") { e.preventDefault(); nextBtn.click(); }
+  if (e.key === "Backspace") { e.preventDefault(); prevBtn.click(); }
+});
+</script>
+</body>
+</html>
