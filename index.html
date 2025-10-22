@@ -245,324 +245,325 @@ const SKILL_LABELS = {
   "Dialog_und_Konfliktfaehigkeit":"Dialog- & Konfliktfähigkeit"
 };
 
-/* ===== Lehrkräfte-Szenarien (LEHR_1 … LEHR_35) ===== */
+/* ===== Lehrkräfte-Szenarien (bereinigt: nur Situationen, Antworten ohne Skilltitel) ===== */
 const SCENARIOS = [
   {
-    "id":"LEHR_1",
-    "text":"ChatGPT im Unterricht – Hilfreich oder hinderlich? Situation: In deiner 9. Klasse sollen die Schüler:innen eine Erörterung schreiben. Eine Schülerin gibt ihren Text ab – sprachlich perfekt, aber ohne persönliche Handschrift. Auf Nachfrage sagt sie offen: „Ich hab ChatGPT gefragt, mir beim Schreiben zu helfen.“ Einige Kolleg:innen sehen das als Betrug, andere als Chance, Medienkompetenz zu fördern.",
-    "options":[
-      {"id":"A","label":"Digitale Ethik & KI-Governance – Ich bespreche mit der Klasse offen, wie KI-Tools wie ChatGPT funktionieren, was fairer und was problematischer Einsatz ist. Gemeinsam entwickeln wir Regeln, wann und wie solche Tools im Unterricht genutzt werden dürfen.","skills":[{"key":"Digitale_Ethik_und_KI_Governance","weight":1}]},
-      {"id":"B","label":"KI-Datenkompetenz – Ich zeige der Klasse, wie man Prompts formuliert, um Inhalte kritisch zu prüfen statt blind zu übernehmen. Wir analysieren die Quellenlage und lernen, wie KI-Ergebnisse hinterfragt werden können.","skills":[{"key":"KI_Datenkompetenz","weight":1}]},
-      {"id":"C","label":"Urteilsfähigkeit – Ich bewerte die Situation nüchtern: Der Text ist formal korrekt, aber nicht selbstständig entstanden. Ich erkläre der Schülerin sachlich, dass die Leistung so nicht gewertet werden kann, und biete an, gemeinsam über KI-Nutzung im Unterricht zu sprechen.","skills":[{"key":"Urteilsfaehigkeit","weight":1}]}
+    id: "LEHR_1",
+    text: "In deiner 9. Klasse sollen die Schüler:innen eine Erörterung schreiben. Eine Schülerin gibt ihren Text ab – sprachlich perfekt, aber ohne persönliche Handschrift. Auf Nachfrage sagt sie offen: „Ich hab ChatGPT gefragt, mir beim Schreiben zu helfen.“ Einige Kolleg:innen sehen das als Betrug, andere als Chance, Medienkompetenz zu fördern.",
+    options: [
+      { id: "A", label: "Ich bespreche mit der Klasse offen, wie KI-Tools funktionieren, was fairer und was problematischer Einsatz ist. Gemeinsam entwickeln wir Regeln, wann und wie solche Tools im Unterricht genutzt werden dürfen.", skills: [{ key: "Digitale_Ethik_und_KI_Governance", weight: 1 }] },
+      { id: "B", label: "Ich zeige der Klasse, wie man Prompts formuliert, um Inhalte kritisch zu prüfen statt blind zu übernehmen. Wir analysieren die Quellenlage und lernen, wie KI-Ergebnisse hinterfragt werden können.", skills: [{ key: "KI_Datenkompetenz", weight: 1 }] },
+      { id: "C", label: "Ich bewerte die Situation nüchtern: Der Text ist formal korrekt, aber nicht selbstständig entstanden. Ich erkläre der Schülerin sachlich, dass die Leistung so nicht gewertet werden kann, und biete an, gemeinsam über KI-Nutzung im Unterricht zu sprechen.", skills: [{ key: "Urteilsfaehigkeit", weight: 1 }] }
     ]
   },
   {
-    "id":"LEHR_2",
-    "text":"Differenzierung im inklusiven Unterricht Situation: Du unterrichtest eine 6. Klasse mit sehr heterogenem Leistungsniveau. Einige Schüler:innen haben Förderbedarf in Sprache und Konzentration, andere sind weit über dem Klassendurchschnitt. Du merkst, dass sich manche unterfordert, andere überfordert fühlen.",
-    "options":[
-      {"id":"A","label":"Agilität – Ich passe meine Unterrichtsplanung spontan an: Ich bilde flexible Gruppen, lasse leistungsstarke Schüler:innen Aufgaben erklären und gebe schwächeren vereinfachte Lernpfade mit visuellen Hilfen. So kann ich schnell auf die Dynamik reagieren.","skills":[{"key":"Agilitaet","weight":1}]},
-      {"id":"B","label":"Eigenverantwortung & Selbstwirksamkeit – Ich führe individuelle Lernziele ein. Jede:r Schüler:in legt wöchentlich fest, was er oder sie erreichen will. Ich begleite den Prozess und lobe sichtbare Fortschritte, um Selbstwirksamkeit zu stärken.","skills":[{"key":"Eigenverantwortung_und_Selbstwirksamkeit","weight":1}]},
-      {"id":"C","label":"Resilienz – Ich merke, dass die Situation mich selbst stresst. Statt mich zu überfordern, suche ich den Austausch mit dem Sonderpädagogen und plane kleine Erfolgserlebnisse ein, um die Klasse und mich zu entlasten.","skills":[{"key":"Resilienz","weight":1}]}
+    id: "LEHR_2",
+    text: "Du unterrichtest eine 6. Klasse mit sehr heterogenem Leistungsniveau. Einige Schüler:innen haben Förderbedarf in Sprache und Konzentration, andere sind weit über dem Klassendurchschnitt. Du merkst, dass sich manche unterfordert, andere überfordert fühlen.",
+    options: [
+      { id: "A", label: "Ich passe meine Unterrichtsplanung spontan an: Ich bilde flexible Gruppen, lasse leistungsstarke Schüler:innen Aufgaben erklären und gebe schwächeren vereinfachte Lernpfade mit visuellen Hilfen.", skills: [{ key: "Agilitaet", weight: 1 }] },
+      { id: "B", label: "Ich führe individuelle Lernziele ein. Jede:r legt wöchentlich fest, was erreicht werden soll. Ich begleite den Prozess und lobe sichtbare Fortschritte, um Selbstwirksamkeit zu stärken.", skills: [{ key: "Eigenverantwortung_und_Selbstwirksamkeit", weight: 1 }] },
+      { id: "C", label: "Ich merke, dass die Situation mich selbst stresst. Statt mich zu überfordern, suche ich den Austausch mit dem Sonderpädagogen und plane kleine Erfolgserlebnisse ein, um die Klasse und mich zu entlasten.", skills: [{ key: "Resilienz", weight: 1 }] }
     ]
   },
   {
-    "id":"LEHR_3",
-    "text":"Kollegiale Zusammenarbeit beim digitalen Wandel Situation: Die Schule möchte künftig vermehrt digitale Lernplattformen einsetzen. Eine Kollegin, die kurz vor der Pension steht, sagt: „Das brauche ich nicht mehr.“ Das Kollegium ist gespalten – einige wollen schnelle Umstellung, andere fühlen sich überfordert. Du bist Teil der Steuergruppe Digitalisierung.",
-    "options":[
-      {"id":"A","label":"Digitale Kollaboration – Ich schlage vor, im Kollegium Tandems zu bilden: Technikaffine Lehrkräfte unterstützen andere im Alltag. So wird Wissen geteilt, ohne Druck aufzubauen.","skills":[{"key":"Digitale_Kollaboration","weight":1}]},
-      {"id":"B","label":"Freundlichkeit (Kindness) – Ich spreche die Kollegin direkt an, zeige Verständnis für ihre Unsicherheit und biete an, sie bei ersten Schritten zu begleiten – ohne sie zu überfordern.","skills":[{"key":"Freundlichkeit","weight":1}]},
-      {"id":"C","label":"Veränderungskompetenz – Ich erinnere das Team daran, dass Veränderungen immer Zeit brauchen. Ich rege an, gemeinsam Prioritäten zu setzen und kleine, machbare Ziele festzulegen.","skills":[{"key":"Veraenderungskompetenz","weight":1}]}
+    id: "LEHR_3",
+    text: "Die Schule möchte vermehrt digitale Lernplattformen einsetzen. Eine Kollegin, die kurz vor der Pension steht, sagt: „Das brauche ich nicht mehr.“ Das Kollegium ist gespalten – einige wollen schnelle Umstellung, andere fühlen sich überfordert. Du bist Teil der Steuergruppe Digitalisierung.",
+    options: [
+      { id: "A", label: "Ich schlage vor, im Kollegium Tandems zu bilden: Technikaffine Lehrkräfte unterstützen andere im Alltag. So wird Wissen geteilt, ohne Druck aufzubauen.", skills: [{ key: "Digitale_Kollaboration", weight: 1 }] },
+      { id: "B", label: "Ich spreche die Kollegin direkt an, zeige Verständnis für ihre Unsicherheit und biete an, sie bei ersten Schritten zu begleiten – ohne sie zu überfordern.", skills: [{ key: "Freundlichkeit", weight: 1 }] },
+      { id: "C", label: "Ich erinnere das Team daran, dass Veränderungen Zeit brauchen. Ich rege an, Prioritäten zu setzen und kleine, machbare Ziele festzulegen.", skills: [{ key: "Veraenderungskompetenz", weight: 1 }] }
     ]
   },
   {
-    "id":"LEHR_4",
-    "text":"Leistungsbewertung nach Gruppenarbeit Situation: Eine Gruppenarbeit im Fach Politik lief sehr unterschiedlich: Zwei Schüler:innen haben viel gearbeitet, drei kaum etwas beigetragen. Jetzt musst du die Leistung fair bewerten.",
-    "options":[
-      {"id":"A","label":"Urteilsfähigkeit – Ich analysiere, welche individuellen Leistungen nachweisbar sind, und bespreche offen mit der Gruppe, wie Beteiligung in Zukunft gerechter gestaltet werden kann.","skills":[{"key":"Urteilsfaehigkeit","weight":1}]},
-      {"id":"B","label":"Werteorientiertes Handeln – Ich entscheide mich bewusst für eine faire Lösung, auch wenn es zusätzliche Arbeit bedeutet: Ich differenziere die Noten, erkläre meine Entscheidung und begründe sie transparent.","skills":[{"key":"Werteorientiertes_Handeln","weight":1}]},
-      {"id":"C","label":"Dialog- & Konfliktfähigkeit – Ich hole die Gruppe an einen Tisch, lasse alle zu Wort kommen und leite das Gespräch lösungsorientiert, damit keine Spannungen bleiben.","skills":[{"key":"Dialog_und_Konfliktfaehigkeit","weight":1}]}
+    id: "LEHR_4",
+    text: "Eine Gruppenarbeit im Fach Politik lief sehr unterschiedlich: Zwei Schüler:innen haben viel gearbeitet, drei kaum etwas beigetragen. Jetzt musst du die Leistung fair bewerten.",
+    options: [
+      { id: "A", label: "Ich analysiere, welche individuellen Leistungen nachweisbar sind, und bespreche offen mit der Gruppe, wie Beteiligung in Zukunft gerechter gestaltet werden kann.", skills: [{ key: "Urteilsfaehigkeit", weight: 1 }] },
+      { id: "B", label: "Ich entscheide mich bewusst für eine faire Lösung, differenziere die Noten, erkläre meine Entscheidung und begründe sie transparent.", skills: [{ key: "Werteorientiertes_Handeln", weight: 1 }] },
+      { id: "C", label: "Ich hole die Gruppe an einen Tisch, lasse alle zu Wort kommen und leite das Gespräch lösungsorientiert, damit keine Spannungen bleiben.", skills: [{ key: "Dialog_und_Konfliktfaehigkeit", weight: 1 }] }
     ]
   },
   {
-    "id":"LEHR_5",
-    "text":"Medienprojekt mit Schüler:innen: Fake News erkennen Situation: In Klasse 8 arbeitest du an einem Medienprojekt. Die Schüler:innen sollen im Internet Informationen zu einem aktuellen Thema recherchieren. Einige übernehmen unkritisch Inhalte von TikTok und zweifelhaften Quellen.",
-    "options":[
-      {"id":"A","label":"Digital Literacy – Ich zeige, wie man Quellen prüft, Impressum und Faktenchecks nutzt, und lasse die Schüler:innen anschließend selbst „Fake News erkennen“-Plakate gestalten.","skills":[{"key":"Digital_Literacy","weight":1}]},
-      {"id":"B","label":"KI-gestütztes Lernen & Weiterbildung – Ich lasse die Klasse KI-Tools nutzen, um Informationen zu strukturieren oder zusammenzufassen, und wir bewerten gemeinsam, was die KI weggelassen oder falsch interpretiert hat.","skills":[{"key":"KI_gestuetztes_Lernen_und_Weiterbildung","weight":1}]},
-      {"id":"C","label":"Kreativität – Ich lasse die Klasse in Gruppen eigene kleine Clips oder Podcasts produzieren, um zu zeigen, wie leicht manipulative Inhalte entstehen können.","skills":[{"key":"Kreativitaet","weight":1}]}
+    id: "LEHR_5",
+    text: "In Klasse 8 sollen die Schüler:innen im Internet zu einem aktuellen Thema recherchieren. Einige übernehmen unkritisch Inhalte von TikTok und zweifelhaften Quellen.",
+    options: [
+      { id: "A", label: "Ich zeige, wie man Quellen prüft, Impressum und Faktenchecks nutzt, und lasse die Schüler:innen anschließend selbst „Fake News erkennen“-Plakate gestalten.", skills: [{ key: "Digital_Literacy", weight: 1 }] },
+      { id: "B", label: "Ich lasse KI-Tools nutzen, um Informationen zu strukturieren oder zusammenzufassen, und wir bewerten gemeinsam, was weggelassen oder falsch interpretiert wurde.", skills: [{ key: "KI_gestuetztes_Lernen_und_Weiterbildung", weight: 1 }] },
+      { id: "C", label: "Ich lasse die Klasse in Gruppen eigene Clips oder Podcasts produzieren, um zu zeigen, wie leicht manipulative Inhalte entstehen können.", skills: [{ key: "Kreativitaet", weight: 1 }] }
     ]
   },
   {
-    "id":"LEHR_6",
-    "text":"Kulturelle Vielfalt im Klassenraum Situation: In deiner 7. Klasse sitzen Schüler:innen aus vielen Nationen. Beim Thema „Familienformen weltweit“ kommt es zu Spannungen, weil sich einige über Traditionen anderer lustig machen.",
-    "options":[
-      {"id":"A","label":"Interkulturelle Kommunikation – Ich leite die Diskussion, lasse verschiedene Perspektiven zu Wort kommen und moderiere respektvoll, damit gegenseitiges Verständnis entsteht.","skills":[{"key":"Interkulturelle_Kommunikation","weight":1}]},
-      {"id":"B","label":"Weltoffenheit – Ich plane ein kleines Projekt: Jede:r stellt eine Tradition oder einen Feiertag aus der eigenen Kultur vor. So wird Vielfalt als Stärke sichtbar.","skills":[{"key":"Weltoffenheit","weight":1}]},
-      {"id":"C","label":"Werteorientiertes Handeln – Ich mache klar, dass Respekt nicht verhandelbar ist, und verankere das Thema Toleranz auch in den Klassenregeln.","skills":[{"key":"Werteorientiertes_Handeln","weight":1}]}
+    id: "LEHR_6",
+    text: "In deiner 7. Klasse sitzen Schüler:innen aus vielen Nationen. Beim Thema „Familienformen weltweit“ kommt es zu Spannungen, weil sich einige über Traditionen anderer lustig machen.",
+    options: [
+      { id: "A", label: "Ich leite die Diskussion, lasse verschiedene Perspektiven zu Wort kommen und moderiere respektvoll, damit gegenseitiges Verständnis entsteht.", skills: [{ key: "Interkulturelle_Kommunikation", weight: 1 }] },
+      { id: "B", label: "Ich plane ein Projekt: Jede:r stellt eine Tradition oder einen Feiertag aus der eigenen Kultur vor. So wird Vielfalt als Stärke sichtbar.", skills: [{ key: "Weltoffenheit", weight: 1 }] },
+      { id: "C", label: "Ich mache klar, dass Respekt nicht verhandelbar ist, und verankere das Thema Toleranz in den Klassenregeln.", skills: [{ key: "Werteorientiertes_Handeln", weight: 1 }] }
     ]
   },
   {
-    "id":"LEHR_7",
-    "text":"Einsatz von KI im Fremdsprachenunterricht Situation: Du möchtest im Englischunterricht KI nutzen, um Schreibaufgaben individueller zu gestalten. Einige Schüler:innen tippen jedoch nur Prompts ein, ohne nachzudenken. Du willst das Lernen mit KI sinnvoll gestalten.",
-    "options":[
-      {"id":"A","label":"Prompt Engineering – Ich erkläre der Klasse, wie man gezielte Eingaben formuliert, um die KI produktiv zu nutzen, z. B. „Schreibe einen Text über Umwelt, passend für 8. Klasse, 100 Wörter, einfache Sprache.“","skills":[{"key":"Prompt_Engineering","weight":1}]},
-      {"id":"B","label":"KI-gestütztes Lernen & Weiterbildung – Ich lasse die Schüler:innen ihren KI-Text anschließend reflektieren und verbessern, um Lernprozesse sichtbar zu machen.","skills":[{"key":"KI_gestuetztes_Lernen_und_Weiterbildung","weight":1}]},
-      {"id":"C","label":"Urteilsfähigkeit – Ich bespreche mit den Schüler:innen, wo die Grenzen liegen: Wann wird KI zur Hilfe, wann zur Täuschung?","skills":[{"key":"Urteilsfaehigkeit","weight":1}]}
+    id: "LEHR_7",
+    text: "Du möchtest im Englischunterricht KI nutzen, um Schreibaufgaben individueller zu gestalten. Einige Schüler:innen tippen jedoch nur Prompts ein, ohne nachzudenken.",
+    options: [
+      { id: "A", label: "Ich erkläre, wie man gezielte Eingaben formuliert, z. B. „Schreibe einen Text über Umwelt, passend für 8. Klasse, 100 Wörter, einfache Sprache.“", skills: [{ key: "Prompt_Engineering", weight: 1 }] },
+      { id: "B", label: "Ich lasse die Schüler:innen ihren KI-Text anschließend reflektieren und verbessern, um Lernprozesse sichtbar zu machen.", skills: [{ key: "KI_gestuetztes_Lernen_und_Weiterbildung", weight: 1 }] },
+      { id: "C", label: "Ich bespreche, wo die Grenzen liegen: Wann wird KI zur Hilfe, wann zur Täuschung?", skills: [{ key: "Urteilsfaehigkeit", weight: 1 }] }
     ]
   },
   {
-    "id":"LEHR_8",
-    "text":"Defekte Tablets im Unterricht Situation: Während eines Tablet-Unterrichts funktioniert bei mehreren Schüler:innen das WLAN oder die Geräte nicht. Die Stunde droht zu scheitern, weil sich niemand auf die Aufgabe konzentrieren kann.",
-    "options":[
-      {"id":"A","label":"Lösungsfähigkeit – Ich bleibe ruhig, analysiere das Problem und leite die Klasse zu einer Offline-Alternative an (z. B. Gruppenarbeit mit Arbeitsblättern). So bleibt das Lernziel erreichbar.","skills":[{"key":"Loesungsfaehigkeit","weight":1}]},
-      {"id":"B","label":"Technologische Kompetenz (Hardware-/Robotikentwicklung) – Ich überprüfe mit den Schüler:innen die Geräte, erkläre die technischen Hintergründe und leite daraus gemeinsam Regeln für einen reibungslosen Technik-Einsatz ab.","skills":[{"key":"Hardware_Robotikentwicklung","weight":1}]},
-      {"id":"C","label":"Resilienz – Ich nutze die Situation als Lernerfahrung: Technik kann ausfallen – entscheidend ist, flexibel und positiv zu bleiben.","skills":[{"key":"Resilienz","weight":1}]}
+    id: "LEHR_8",
+    text: "Während eines Tablet-Unterrichts funktioniert bei mehreren Schüler:innen das WLAN oder die Geräte nicht. Die Stunde droht zu scheitern, weil sich niemand auf die Aufgabe konzentrieren kann.",
+    options: [
+      { id: "A", label: "Ich bleibe ruhig, analysiere das Problem und leite die Klasse zu einer Offline-Alternative an (z. B. Gruppenarbeit mit Arbeitsblättern).", skills: [{ key: "Loesungsfaehigkeit", weight: 1 }] },
+      { id: "B", label: "Ich überprüfe mit den Schüler:innen die Geräte, erkläre technische Hintergründe und leite daraus gemeinsam Regeln für einen reibungslosen Technik-Einsatz ab.", skills: [{ key: "Hardware_Robotikentwicklung", weight: 1 }] },
+      { id: "C", label: "Ich nutze die Situation als Lernerfahrung: Technik kann ausfallen – entscheidend ist, flexibel und positiv zu bleiben.", skills: [{ key: "Resilienz", weight: 1 }] }
     ]
   },
   {
-    "id":"LEHR_9",
-    "text":"Projektwoche „Schule der Zukunft“ Situation: Eure Schule plant eine Projektwoche zum Thema Zukunft und Nachhaltigkeit. Du sollst ein Konzept für ein Schülerprojekt entwickeln, das Technologie und Kreativität verbindet.",
-    "options":[
-      {"id":"A","label":"Nutzerzentriertes Design – Ich plane ein Schülerprojekt, bei dem die Lernenden eigene Ideen zur Schulgestaltung entwickeln – von App-Vorschlägen bis hin zu nachhaltigen Raumkonzepten.","skills":[{"key":"Nutzerzentriertes_Design","weight":1}]},
-      {"id":"B","label":"Innovationskompetenz – Ich lasse die Schüler:innen Zukunftsideen entwickeln, bewerten und in einem Pitch vorstellen – z. B. „Wie könnte Lernen 2035 aussehen?“","skills":[{"key":"Innovationskompetenz","weight":1}]},
-      {"id":"C","label":"Kreativität – Ich leite Workshops an, in denen Schüler:innen Modelle, Prototypen oder Videos gestalten, um ihre Vision sichtbar zu machen.","skills":[{"key":"Kreativitaet","weight":1}]}
+    id: "LEHR_9",
+    text: "Eure Schule plant eine Projektwoche zu Zukunft und Nachhaltigkeit. Du sollst ein Konzept für ein Schülerprojekt entwickeln, das Technologie und Kreativität verbindet.",
+    options: [
+      { id: "A", label: "Ich plane ein Projekt, bei dem Lernende eigene Ideen zur Schulgestaltung entwickeln – von App-Vorschlägen bis hin zu nachhaltigen Raumkonzepten.", skills: [{ key: "Nutzerzentriertes_Design", weight: 1 }] },
+      { id: "B", label: "Ich lasse Zukunftsideen entwickeln, bewerten und in einem Pitch vorstellen, z. B. „Wie könnte Lernen 2035 aussehen?“", skills: [{ key: "Innovationskompetenz", weight: 1 }] },
+      { id: "C", label: "Ich leite Workshops an, in denen Modelle, Prototypen oder Videos entstehen, um Visionen sichtbar zu machen.", skills: [{ key: "Kreativitaet", weight: 1 }] }
     ]
   },
   {
-    "id":"LEHR_10",
-    "text":"Unterrichtsausfall kompensieren – Kollegiale Lösungssuche Situation: Eine Kollegin fällt kurzfristig aus, ihre Klasse steht ohne Vertretung da. Du wirst gefragt, spontan einzuspringen, hast aber selbst viel zu tun.",
-    "options":[
-      {"id":"A","label":"Digitale Kollaboration – Ich stimme mich mit dem Kollegium ab und übernehme digital: Ich stelle online Material bereit und betreue die Klasse kurz virtuell, um Unterrichtsausfall zu vermeiden.","skills":[{"key":"Digitale_Kollaboration","weight":1}]},
-      {"id":"B","label":"Lösungsfähigkeit – Ich organisiere kurzfristig eine kombinierte Unterrichtsstunde, in der beide Klassen an einem gemeinsamen Thema arbeiten – so bleibt Struktur erhalten.","skills":[{"key":"Loesungsfaehigkeit","weight":1}]},
-      {"id":"C","label":"Freundlichkeit (Kindness) – Ich helfe der Kollegin aus, weil ich weiß, wie belastend spontane Ausfälle sind, und organisiere meinen Unterricht danach flexibel.","skills":[{"key":"Freundlichkeit","weight":1}]}
+    id: "LEHR_10",
+    text: "Eine Kollegin fällt kurzfristig aus, ihre Klasse steht ohne Vertretung da. Du wirst gefragt, spontan einzuspringen, hast aber selbst viel zu tun.",
+    options: [
+      { id: "A", label: "Ich stimme mich mit dem Kollegium ab und übernehme digital: Ich stelle online Material bereit und betreue die Klasse kurz virtuell.", skills: [{ key: "Digitale_Kollaboration", weight: 1 }] },
+      { id: "B", label: "Ich organisiere kurzfristig eine kombinierte Unterrichtsstunde, in der beide Klassen an einem gemeinsamen Thema arbeiten.", skills: [{ key: "Loesungsfaehigkeit", weight: 1 }] },
+      { id: "C", label: "Ich helfe der Kollegin aus und organisiere meinen Unterricht flexibel um, weil spontane Ausfälle belastend sind.", skills: [{ key: "Freundlichkeit", weight: 1 }] }
     ]
   },
   {
-    "id":"LEHR_11",
-    "text":"Schulinnovation im Kollegium Situation: Du bist in einer Arbeitsgruppe zur Schulentwicklung. Es geht darum, neue Lernformen zu testen, z. B. Lernbüros oder hybride Lernphasen. Einige Kolleg:innen sind offen, andere blocken ab.",
-    "options":[
-      {"id":"A","label":"Veränderungskompetenz – Ich schlage kleine, machbare Schritte vor und begleite Kolleg:innen bei der Umsetzung, um Vorbehalte abzubauen.","skills":[{"key":"Veraenderungskompetenz","weight":1}]},
-      {"id":"B","label":"Unternehmerisches Denken & Innovationsgeist – Ich entwickle mit meiner Gruppe ein Pilotprojekt, präsentiere Nutzenargumente und plane eine Feedbackrunde mit Schüler:innen.","skills":[{"key":"Unternehmerisches_Denken_und_Innovationsgeist","weight":1}]},
-      {"id":"C","label":"Dialog- & Konfliktfähigkeit – Ich leite Diskussionen sachlich, gehe auf Einwände ein und sorge dafür, dass jede Perspektive gehört wird.","skills":[{"key":"Dialog_und_Konfliktfaehigkeit","weight":1}]}
+    id: "LEHR_11",
+    text: "Du bist in einer Arbeitsgruppe zur Schulentwicklung. Es geht darum, neue Lernformen zu testen, z. B. Lernbüros oder hybride Lernphasen. Einige Kolleg:innen sind offen, andere blocken ab.",
+    options: [
+      { id: "A", label: "Ich schlage kleine, machbare Schritte vor und begleite Kolleg:innen bei der Umsetzung, um Vorbehalte abzubauen.", skills: [{ key: "Veraenderungskompetenz", weight: 1 }] },
+      { id: "B", label: "Ich entwickle mit meiner Gruppe ein Pilotprojekt, präsentiere Nutzenargumente und plane eine Feedbackrunde mit Schüler:innen.", skills: [{ key: "Unternehmerisches_Denken_und_Innovationsgeist", weight: 1 }] },
+      { id: "C", label: "Ich leite Diskussionen sachlich, gehe auf Einwände ein und sorge dafür, dass jede Perspektive gehört wird.", skills: [{ key: "Dialog_und_Konfliktfaehigkeit", weight: 1 }] }
     ]
   },
   {
-    "id":"LEHR_12",
-    "text":"Schüler:innen mit geringer Motivation im Fachunterricht Situation: In deiner Klasse scheinen viele Schüler:innen keine Lust auf das Fach zu haben. Du merkst, dass Frontalunterricht wenig bewirkt, und suchst neue Wege, um Interesse zu wecken.",
-    "options":[
-      {"id":"A","label":"Eigenverantwortung & Selbstwirksamkeit – Ich lasse die Schüler:innen eigene Themen oder Fragestellungen wählen, um mehr Verantwortung für ihr Lernen zu übernehmen.","skills":[{"key":"Eigenverantwortung_und_Selbstwirksamkeit","weight":1}]},
-      {"id":"B","label":"Digital Literacy – Ich nutze interaktive Tools (z. B. Quiz, Umfragen, Lernplattformen), damit sie aktiv mitgestalten und sich selbst überprüfen können.","skills":[{"key":"Digital_Literacy","weight":1}]},
-      {"id":"C","label":"Kreativität – Ich entwickle handlungsorientierte Aufgaben, z. B. kleine Projekte oder Wettbewerbe, um das Lernen erlebbarer zu machen.","skills":[{"key":"Kreativitaet","weight":1}]}
+    id: "LEHR_12",
+    text: "In deiner Klasse scheinen viele Schüler:innen keine Lust auf das Fach zu haben. Frontalunterricht bewirkt wenig, du suchst neue Wege, um Interesse zu wecken.",
+    options: [
+      { id: "A", label: "Ich lasse die Schüler:innen eigene Themen oder Fragestellungen wählen, um mehr Verantwortung für ihr Lernen zu übernehmen.", skills: [{ key: "Eigenverantwortung_und_Selbstwirksamkeit", weight: 1 }] },
+      { id: "B", label: "Ich nutze interaktive Tools (z. B. Quiz, Umfragen, Lernplattformen), damit sie aktiv mitgestalten und sich selbst überprüfen können.", skills: [{ key: "Digital_Literacy", weight: 1 }] },
+      { id: "C", label: "Ich entwickle handlungsorientierte Aufgaben, z. B. kleine Projekte oder Wettbewerbe, um das Lernen erlebbarer zu machen.", skills: [{ key: "Kreativitaet", weight: 1 }] }
     ]
   },
   {
-    "id":"LEHR_13",
-    "text":"Ordnung im digitalen Lehrerzimmer Situation: Auf dem schulinternen Cloud-Laufwerk herrscht Chaos: alte Arbeitsblätter, doppelte Dateien, unklare Ordnernamen. Die Schulleitung bittet das Kollegium, mehr Struktur hineinzubringen.",
-    "options":[
-      {"id":"A","label":"Datenmanagement & digitale Ordnung – Ich entwickle ein klares Ordner-System mit Namenskonventionen (z. B. Fach_Klasse_Thema) und erkläre Kolleg:innen die Vorteile sauberer Dateistruktur.","skills":[{"key":"Datenmanagement","weight":1}]},
-      {"id":"B","label":"Digitale Kollaboration – Ich schlage vor, gemeinsam einheitliche Regeln für Dateiablagen zu erarbeiten und regelmäßig zu prüfen, ob sie eingehalten werden.","skills":[{"key":"Digitale_Kollaboration","weight":1}]},
-      {"id":"C","label":"Eigenverantwortung & Selbstwirksamkeit – Ich beginne selbst mit meiner Fachgruppe und zeige am Beispiel, wie produktiveres Arbeiten durch Ordnung funktioniert.","skills":[{"key":"Eigenverantwortung_und_Selbstwirksamkeit","weight":1}]}
+    id: "LEHR_13",
+    text: "Auf dem schulinternen Cloud-Laufwerk herrscht Chaos: alte Arbeitsblätter, doppelte Dateien, unklare Ordnernamen. Die Schulleitung bittet um mehr Struktur.",
+    options: [
+      { id: "A", label: "Ich entwickle ein klares Ordner-System mit Namenskonventionen (z. B. Fach_Klasse_Thema) und erkläre die Vorteile sauberer Dateistruktur.", skills: [{ key: "Datenmanagement", weight: 1 }] },
+      { id: "B", label: "Ich schlage vor, gemeinsam einheitliche Regeln für Dateiablagen zu erarbeiten und regelmäßig zu prüfen, ob sie eingehalten werden.", skills: [{ key: "Digitale_Kollaboration", weight: 1 }] },
+      { id: "C", label: "Ich beginne selbst mit meiner Fachgruppe und zeige am Beispiel, wie produktiveres Arbeiten durch Ordnung funktioniert.", skills: [{ key: "Eigenverantwortung_und_Selbstwirksamkeit", weight: 1 }] }
     ]
   },
   {
-    "id":"LEHR_14",
-    "text":"Schülerprojekt „Robotik trifft Umwelt“ Situation: Im Technikunterricht soll ein außerschulischer Wettbewerb vorbereitet werden. Die Aufgabe: einen kleinen Roboter entwickeln, der Müll sortieren kann. Viele Schüler:innen haben kaum Erfahrung mit Robotik.",
-    "options":[
-      {"id":"A","label":"Hardware-/Robotikentwicklung – Ich leite die Schüler:innen an, einfache Sensoren und Motoren zu verbauen, erkläre technische Zusammenhänge und fördere systematisches Testen.","skills":[{"key":"Hardware_Robotikentwicklung","weight":1}]},
-      {"id":"B","label":"Lösungsfähigkeit – Ich lasse die Gruppen auftretende Fehler eigenständig analysieren und an Verbesserungen arbeiten, statt sofort Lösungen vorzugeben.","skills":[{"key":"Loesungsfaehigkeit","weight":1}]},
-      {"id":"C","label":"Digitale Ethik & KI-Governance – Ich diskutiere mit den Schüler:innen, welche Grenzen Technik hat und welche Verantwortung wir bei automatisierten Systemen tragen.","skills":[{"key":"Digitale_Ethik_und_KI_Governance","weight":1}]}
+    id: "LEHR_14",
+    text: "Im Technikunterricht soll ein Wettbewerb vorbereitet werden: ein kleiner Roboter, der Müll sortieren kann. Viele Schüler:innen haben kaum Erfahrung mit Robotik.",
+    options: [
+      { id: "A", label: "Ich leite an, einfache Sensoren und Motoren zu verbauen, erkläre technische Zusammenhänge und fördere systematisches Testen.", skills: [{ key: "Hardware_Robotikentwicklung", weight: 1 }] },
+      { id: "B", label: "Ich lasse auftretende Fehler eigenständig analysieren und an Verbesserungen arbeiten, statt sofort Lösungen vorzugeben.", skills: [{ key: "Loesungsfaehigkeit", weight: 1 }] },
+      { id: "C", label: "Ich diskutiere mit der Klasse, welche Grenzen Technik hat und welche Verantwortung wir bei automatisierten Systemen tragen.", skills: [{ key: "Digitale_Ethik_und_KI_Governance", weight: 1 }] }
     ]
   },
   {
-    "id":"LEHR_15",
-    "text":"Notenvergabe unter Druck Situation: Kurz vor Zeugniskonferenzen bittet dich ein Kollege, die Note eines Schülers „etwas wohlwollender“ zu sehen, um Diskussionen mit den Eltern zu vermeiden. Du bist unsicher, ob das gerecht ist.",
-    "options":[
-      {"id":"A","label":"Werteorientiertes Handeln – Ich bleibe bei meiner fachlich begründeten Bewertung und erkläre transparent, warum ich die Note nicht anpasse.","skills":[{"key":"Werteorientiertes_Handeln","weight":1}]},
-      {"id":"B","label":"Urteilsfähigkeit – Ich prüfe die Gesamtleistung, vergleiche mit Kriterien und bespreche offen mit dem Kollegen, welche Folgen eine Änderung hätte.","skills":[{"key":"Urteilsfaehigkeit","weight":1}]},
-      {"id":"C","label":"Resilienz – Ich lasse mich nicht unter Druck setzen, sondern hole mir ggf. Rückendeckung von der Schulleitung, um die Situation professionell zu klären.","skills":[{"key":"Resilienz","weight":1}]}
+    id: "LEHR_15",
+    text: "Kurz vor Zeugniskonferenzen bittet dich ein Kollege, die Note eines Schülers „etwas wohlwollender“ zu sehen, um Diskussionen mit den Eltern zu vermeiden.",
+    options: [
+      { id: "A", label: "Ich bleibe bei meiner fachlich begründeten Bewertung und erkläre transparent, warum ich die Note nicht anpasse.", skills: [{ key: "Werteorientiertes_Handeln", weight: 1 }] },
+      { id: "B", label: "Ich prüfe die Gesamtleistung, vergleiche mit Kriterien und bespreche offen, welche Folgen eine Änderung hätte.", skills: [{ key: "Urteilsfaehigkeit", weight: 1 }] },
+      { id: "C", label: "Ich lasse mich nicht unter Druck setzen und hole mir bei Bedarf Rückendeckung von der Schulleitung.", skills: [{ key: "Resilienz", weight: 1 }] }
     ]
   },
   {
-    "id":"LEHR_16",
-    "text":"Ideenwettbewerb „Unsere Schule 2030“ Situation: Die Stadt schreibt einen Wettbewerb aus: Schulen sollen innovative Konzepte für die Zukunft des Lernens einreichen. Du möchtest mit Schüler:innen teilnehmen.",
-    "options":[
-      {"id":"A","label":"Unternehmerisches Denken & Innovationsgeist – Ich entwickle gemeinsam mit Schüler:innen eine Vision für „Lernen 2030“ und präsentiere sie überzeugend vor einer Jury.","skills":[{"key":"Unternehmerisches_Denken_und_Innovationsgeist","weight":1}]},
-      {"id":"B","label":"Kreativität – Ich leite die Klasse an, ihre Ideen visuell darzustellen – z. B. in Modellen, Storyboards oder kurzen Videos.","skills":[{"key":"Kreativitaet","weight":1}]},
-      {"id":"C","label":"Nutzerzentriertes Design – Ich beziehe Schüler:innen, Eltern und Kolleg:innen in die Konzeptentwicklung ein, um ein echtes Schul-Erlebnis der Zukunft zu entwerfen.","skills":[{"key":"Nutzerzentriertes_Design","weight":1}]}
+    id: "LEHR_16",
+    text: "Die Stadt schreibt einen Wettbewerb aus: Schulen sollen innovative Konzepte für die Zukunft des Lernens einreichen. Du möchtest mit Schüler:innen teilnehmen.",
+    options: [
+      { id: "A", label: "Ich entwickle gemeinsam mit Schüler:innen eine Vision für „Lernen 2030“ und präsentiere sie überzeugend vor einer Jury.", skills: [{ key: "Unternehmerisches_Denken_und_Innovationsgeist", weight: 1 }] },
+      { id: "B", label: "Ich leite die Klasse an, ihre Ideen visuell darzustellen – z. B. in Modellen, Storyboards oder kurzen Videos.", skills: [{ key: "Kreativitaet", weight: 1 }] },
+      { id: "C", label: "Ich beziehe Schüler:innen, Eltern und Kolleg:innen in die Konzeptentwicklung ein, um ein echtes Schul-Erlebnis der Zukunft zu entwerfen.", skills: [{ key: "Nutzerzentriertes_Design", weight: 1 }] }
     ]
   },
   {
-    "id":"LEHR_17",
-    "text":"KI-unterstütztes Feedback an Schüler:innen Situation: Du möchtest ein KI-Tool testen, das automatisch Feedback zu Aufsätzen gibt. Du willst aber sicherstellen, dass Schüler:innen den Lernprozess verstehen und nicht nur die KI bewerten lassen.",
-    "options":[
-      {"id":"A","label":"Prompt Engineering – Ich formuliere gezielt Eingaben, die die KI zu konstruktivem, lernförderlichem Feedback anregen, z. B. „Gib drei Verbesserungsvorschläge mit Begründung in einfacher Sprache.“","skills":[{"key":"Prompt_Engineering","weight":1}]},
-      {"id":"B","label":"KI-gestütztes Lernen & Weiterbildung – Ich lasse die Schüler:innen ihr KI-Feedback mit meinem vergleichen und reflektieren, was sie daraus lernen.","skills":[{"key":"KI_gestuetztes_Lernen_und_Weiterbildung","weight":1}]},
-      {"id":"C","label":"Digitale Ethik & KI-Governance – Ich bespreche mit der Klasse Datenschutz- und Bias-Fragen: Wer hat Zugriff auf die Texte, und wie fair ist KI-Bewertung?","skills":[{"key":"Digitale_Ethik_und_KI_Governance","weight":1}]}
+    id: "LEHR_17",
+    text: "Du möchtest ein KI-Tool testen, das automatisch Feedback zu Aufsätzen gibt. Du willst sicherstellen, dass Schüler:innen den Lernprozess verstehen und nicht nur die KI bewerten lassen.",
+    options: [
+      { id: "A", label: "Ich formuliere gezielte Eingaben, die die KI zu konstruktivem, lernförderlichem Feedback anregen, z. B. „Gib drei Verbesserungsvorschläge mit Begründung in einfacher Sprache.“", skills: [{ key: "Prompt_Engineering", weight: 1 }] },
+      { id: "B", label: "Ich lasse die Schüler:innen ihr KI-Feedback mit meinem vergleichen und reflektieren, was sie daraus lernen.", skills: [{ key: "KI_gestuetztes_Lernen_und_Weiterbildung", weight: 1 }] },
+      { id: "C", label: "Ich bespreche mit der Klasse Datenschutz- und Bias-Fragen: Wer hat Zugriff auf die Texte, und wie fair ist KI-Bewertung?", skills: [{ key: "Digitale_Ethik_und_KI_Governance", weight: 1 }] }
     ]
   },
   {
-    "id":"LEHR_18",
-    "text":"Konflikt im Kollegium – Kommunikationskultur Situation: Zwei Kolleg:innen geraten in der Pause lautstark aneinander, weil die Raumplanung nicht funktioniert hat. Du bist Fachvorsitzende:r und wirst gebeten zu vermitteln.",
-    "options":[
-      {"id":"A","label":"Dialog- & Konfliktfähigkeit – Ich führe ein moderiertes Gespräch, lasse beide Seiten ausreden und suche gemeinsam mit ihnen nach einer verbindlichen Lösung.","skills":[{"key":"Dialog_und_Konfliktfaehigkeit","weight":1}]},
-      {"id":"B","label":"Urteilsfähigkeit – Ich kläre zuerst sachlich, welche Missverständnisse entstanden sind, und analysiere, wo organisatorische Fehler liegen.","skills":[{"key":"Urteilsfaehigkeit","weight":1}]},
-      {"id":"C","label":"Werteorientiertes Handeln – Ich betone respektvollen Umgang als verbindlichen Teil der Schulkultur und verweise auf gemeinsame Ziele statt Schuldfragen.","skills":[{"key":"Werteorientiertes_Handeln","weight":1}]}
+    id: "LEHR_18",
+    text: "Zwei Kolleg:innen geraten in der Pause lautstark aneinander, weil die Raumplanung nicht funktioniert hat. Du bist Fachvorsitzende:r und wirst gebeten zu vermitteln.",
+    options: [
+      { id: "A", label: "Ich führe ein moderiertes Gespräch, lasse beide Seiten ausreden und suche gemeinsam nach einer verbindlichen Lösung.", skills: [{ key: "Dialog_und_Konfliktfaehigkeit", weight: 1 }] },
+      { id: "B", label: "Ich kläre zuerst sachlich, welche Missverständnisse entstanden sind, und analysiere, wo organisatorische Fehler liegen.", skills: [{ key: "Urteilsfaehigkeit", weight: 1 }] },
+      { id: "C", label: "Ich betone respektvollen Umgang als verbindlichen Teil der Schulkultur und verweise auf gemeinsame Ziele statt Schuldfragen.", skills: [{ key: "Werteorientiertes_Handeln", weight: 1 }] }
     ]
   },
   {
-    "id":"LEHR_19",
-    "text":"Elterngespräch über Lernrückstände Situation: Die Eltern eines Schülers beschweren sich, dass ihr Sohn im Distanzunterricht zu wenig Unterstützung bekommen habe. Sie erwarten, dass du die Noten nachträglich anpasst.",
-    "options":[
-      {"id":"A","label":"Dialog- & Konfliktfähigkeit – Ich höre die Eltern ruhig an, erkläre die Bewertung transparent und zeige Möglichkeiten auf, wie der Schüler künftig unterstützt werden kann.","skills":[{"key":"Dialog_und_Konfliktfaehigkeit","weight":1}]},
-      {"id":"B","label":"Resilienz – Ich lasse mich von der emotionalen Situation nicht unter Druck setzen, sondern halte den Fokus auf Lösungen.","skills":[{"key":"Resilienz","weight":1}]},
-      {"id":"C","label":"Werteorientiertes Handeln – Ich bleibe fair und ehrlich in meiner Bewertung, auch wenn das Gespräch unangenehm ist.","skills":[{"key":"Werteorientiertes_Handeln","weight":1}]}
+    id: "LEHR_19",
+    text: "Die Eltern eines Schülers beschweren sich, dass ihr Sohn im Distanzunterricht zu wenig Unterstützung bekommen habe. Sie erwarten, dass du die Noten nachträglich anpasst.",
+    options: [
+      { id: "A", label: "Ich höre die Eltern ruhig an, erkläre die Bewertung transparent und zeige Möglichkeiten auf, wie der Schüler künftig unterstützt werden kann.", skills: [{ key: "Dialog_und_Konfliktfaehigkeit", weight: 1 }] },
+      { id: "B", label: "Ich lasse mich von der emotionalen Situation nicht unter Druck setzen und halte den Fokus auf Lösungen.", skills: [{ key: "Resilienz", weight: 1 }] },
+      { id: "C", label: "Ich bleibe fair und ehrlich in meiner Bewertung, auch wenn das Gespräch unangenehm ist.", skills: [{ key: "Werteorientiertes_Handeln", weight: 1 }] }
     ]
   },
   {
-    "id":"LEHR_20",
-    "text":"Störungen im Unterricht – Klasse 8 ist laut und unkonzentriert Situation: Eine Unterrichtsstunde gerät aus dem Ruder. Viele Schüler:innen rufen dazwischen, kaum jemand arbeitet konzentriert.",
-    "options":[
-      {"id":"A","label":"Lösungsfähigkeit – Ich halte kurz inne, verändere spontan die Methode (z. B. Gruppenarbeit, Bewegungseinheit) und hole die Klasse aktiv zurück.","skills":[{"key":"Loesungsfaehigkeit","weight":1}]},
-      {"id":"B","label":"Selbstbewusstsein – Ich bleibe souverän, auch wenn es laut ist, und setze meine Regeln konsequent durch.","skills":[{"key":"Selbstbewusstsein","weight":1}]},
-      {"id":"C","label":"Urteilsfähigkeit – Ich analysiere später, ob meine Unterrichtsplanung oder äußere Faktoren (z. B. Tageszeit, Themenwahl) zur Unruhe beigetragen haben.","skills":[{"key":"Urteilsfaehigkeit","weight":1}]}
+    id: "LEHR_20",
+    text: "Eine Unterrichtsstunde gerät aus dem Ruder. Viele Schüler:innen rufen dazwischen, kaum jemand arbeitet konzentriert.",
+    options: [
+      { id: "A", label: "Ich halte kurz inne, verändere spontan die Methode (z. B. Gruppenarbeit, Bewegungseinheit) und hole die Klasse aktiv zurück.", skills: [{ key: "Loesungsfaehigkeit", weight: 1 }] },
+      { id: "B", label: "Ich bleibe souverän, auch wenn es laut ist, und setze meine Regeln konsequent durch.", skills: [{ key: "Selbstbewusstsein", weight: 1 }] },
+      { id: "C", label: "Ich analysiere später, ob meine Unterrichtsplanung oder äußere Faktoren (z. B. Tageszeit, Themenwahl) zur Unruhe beigetragen haben.", skills: [{ key: "Urteilsfaehigkeit", weight: 1 }] }
     ]
   },
   {
-    "id":"LEHR_21",
-    "text":"Fortbildung zur Digitalisierung Situation: Die Schule bietet eine interne Fortbildung zu digitalen Tools an. Viele Kolleg:innen nehmen teil, du hast aber das Gefühl, ohnehin schon viel zu wissen.",
-    "options":[
-      {"id":"A","label":"KI-gestütztes Lernen & Weiterbildung – Ich nutze die Fortbildung, um mein Wissen zu vertiefen, neue Funktionen zu testen und aktiv Fragen zu stellen.","skills":[{"key":"KI_gestuetztes_Lernen_und_Weiterbildung","weight":1}]},
-      {"id":"B","label":"Weltoffenheit – Ich interessiere mich für die Sichtweisen anderer Fachrichtungen und überlege, wie digitale Tools fächerübergreifend wirken könnten.","skills":[{"key":"Weltoffenheit","weight":1}]},
-      {"id":"C","label":"Eigenverantwortung & Selbstwirksamkeit – Ich melde mich anschließend freiwillig als Multiplikator:in, um mein Wissen weiterzugeben.","skills":[{"key":"Eigenverantwortung_und_Selbstwirksamkeit","weight":1}]}
+    id: "LEHR_21",
+    text: "Die Schule bietet eine interne Fortbildung zu digitalen Tools an. Viele Kolleg:innen nehmen teil, du hast aber das Gefühl, ohnehin schon viel zu wissen.",
+    options: [
+      { id: "A", label: "Ich nutze die Fortbildung, um mein Wissen zu vertiefen, neue Funktionen zu testen und aktiv Fragen zu stellen.", skills: [{ key: "KI_gestuetztes_Lernen_und_Weiterbildung", weight: 1 }] },
+      { id: "B", label: "Ich interessiere mich für die Sichtweisen anderer Fachrichtungen und überlege, wie digitale Tools fächerübergreifend wirken könnten.", skills: [{ key: "Weltoffenheit", weight: 1 }] },
+      { id: "C", label: "Ich melde mich anschließend freiwillig als Multiplikator:in, um mein Wissen weiterzugeben.", skills: [{ key: "Eigenverantwortung_und_Selbstwirksamkeit", weight: 1 }] }
     ]
   },
   {
-    "id":"LEHR_22",
-    "text":"Schüler:innen-Feedback zu Unterrichtsmethoden Situation: Deine Schulleitung bittet alle Lehrkräfte, einmal im Halbjahr anonymes Feedback von Schüler:innen einzuholen. Du bist unsicher, ob dich das eher demotiviert oder bereichert.",
-    "options":[
-      {"id":"A","label":"Eigenverantwortung & Selbstwirksamkeit – Ich sehe das Feedback als Chance zur Weiterentwicklung und plane danach gezielte Anpassungen.","skills":[{"key":"Eigenverantwortung_und_Selbstwirksamkeit","weight":1}]},
-      {"id":"B","label":"Urteilsfähigkeit – Ich differenziere konstruktiv: Was ist berechtigt, was eher subjektiv? So nutze ich die Rückmeldung gezielt.","skills":[{"key":"Urteilsfaehigkeit","weight":1}]},
-      {"id":"C","label":"Resilienz – Ich nehme Kritik nicht persönlich, sondern als Anlass für fachliches Wachstum.","skills":[{"key":"Resilienz","weight":1}]}
+    id: "LEHR_22",
+    text: "Die Schulleitung bittet alle Lehrkräfte, einmal im Halbjahr anonymes Feedback von Schüler:innen einzuholen. Du bist unsicher, ob dich das eher demotiviert oder bereichert.",
+    options: [
+      { id: "A", label: "Ich sehe das Feedback als Chance zur Weiterentwicklung und plane danach gezielte Anpassungen.", skills: [{ key: "Eigenverantwortung_und_Selbstwirksamkeit", weight: 1 }] },
+      { id: "B", label: "Ich differenziere konstruktiv: Was ist berechtigt, was eher subjektiv? So nutze ich die Rückmeldung gezielt.", skills: [{ key: "Urteilsfaehigkeit", weight: 1 }] },
+      { id: "C", label: "Ich nehme Kritik nicht persönlich, sondern als Anlass für fachliches Wachstum.", skills: [{ key: "Resilienz", weight: 1 }] }
     ]
   },
   {
-    "id":"LEHR_23",
-    "text":"Nachhaltigkeitsprojekt an der Schule Situation: Eine Schüler:innenvertretung möchte das Thema Nachhaltigkeit stärker in der Schule verankern. Du wirst gefragt, ob du ein Projekt begleitest.",
-    "options":[
-      {"id":"A","label":"Unternehmerisches Denken & Innovationsgeist – Ich unterstütze die SV, ein Konzept für „grüne Schule“ zu entwickeln und Fördergelder zu beantragen.","skills":[{"key":"Unternehmerisches_Denken_und_Innovationsgeist","weight":1}]},
-      {"id":"B","label":"Kreativität – Ich rege dazu an, Recycling-Ideen im Kunst- oder Technikunterricht praktisch umzusetzen.","skills":[{"key":"Kreativitaet","weight":1}]},
-      {"id":"C","label":"Veränderungskompetenz – Ich helfe, das Projekt in bestehende Strukturen (z. B. Schulfeste, AGs) zu integrieren, damit es nachhaltig bleibt.","skills":[{"key":"Veraenderungskompetenz","weight":1}]}
+    id: "LEHR_23",
+    text: "Die Schüler:innenvertretung möchte das Thema Nachhaltigkeit stärker in der Schule verankern. Du wirst gefragt, ob du ein Projekt begleitest.",
+    options: [
+      { id: "A", label: "Ich unterstütze die SV, ein Konzept für „grüne Schule“ zu entwickeln und Fördergelder zu beantragen.", skills: [{ key: "Unternehmerisches_Denken_und_Innovationsgeist", weight: 1 }] },
+      { id: "B", label: "Ich rege dazu an, Recycling-Ideen im Kunst- oder Technikunterricht praktisch umzusetzen.", skills: [{ key: "Kreativitaet", weight: 1 }] },
+      { id: "C", label: "Ich helfe, das Projekt in bestehende Strukturen (z. B. Schulfeste, AGs) zu integrieren, damit es nachhaltig bleibt.", skills: [{ key: "Veraenderungskompetenz", weight: 1 }] }
     ]
   },
   {
-    "id":"LEHR_24",
-    "text":"Teamarbeit im Fachbereich Situation: In deiner Fachkonferenz gibt es Uneinigkeit über die Prüfungsform im kommenden Schuljahr. Einige wollen Projektarbeit, andere klassische Tests.",
-    "options":[
-      {"id":"A","label":"Dialog- & Konfliktfähigkeit – Ich leite eine strukturierte Diskussion, fasse Positionen zusammen und moderiere einen Kompromiss.","skills":[{"key":"Dialog_und_Konfliktfaehigkeit","weight":1}]},
-      {"id":"B","label":"Digital Literacy – Ich schlage vor, verschiedene Prüfungsformate digital zu dokumentieren, um die Ergebnisse vergleichbar zu machen.","skills":[{"key":"Digital_Literacy","weight":1}]},
-      {"id":"C","label":"Werteorientiertes Handeln – Ich achte darauf, dass Entscheidungen transparent getroffen werden und alle gehört werden.","skills":[{"key":"Werteorientiertes_Handeln","weight":1}]}
+    id: "LEHR_24",
+    text: "In deiner Fachkonferenz gibt es Uneinigkeit über die Prüfungsform im kommenden Schuljahr. Einige wollen Projektarbeit, andere klassische Tests.",
+    options: [
+      { id: "A", label: "Ich leite eine strukturierte Diskussion, fasse Positionen zusammen und moderiere einen Kompromiss.", skills: [{ key: "Dialog_und_Konfliktfaehigkeit", weight: 1 }] },
+      { id: "B", label: "Ich schlage vor, verschiedene Prüfungsformate digital zu dokumentieren, um die Ergebnisse vergleichbar zu machen.", skills: [{ key: "Digital_Literacy", weight: 1 }] },
+      { id: "C", label: "Ich achte darauf, dass Entscheidungen transparent getroffen werden und alle gehört werden.", skills: [{ key: "Werteorientiertes_Handeln", weight: 1 }] }
     ]
   },
   {
-    "id":"LEHR_25",
-    "text":"Persönliche Weiterentwicklung als Lehrkraft Situation: Du merkst, dass dir nach vielen Schuljahren die Motivation fehlt. Routine ersetzt Neugier. Du überlegst, wie du dich wieder inspirieren lassen kannst.",
-    "options":[
-      {"id":"A","label":"Selbstbewusstsein – Ich reflektiere meine Stärken und was mich ursprünglich an meinem Beruf begeistert hat, um neue Energie zu gewinnen.","skills":[{"key":"Selbstbewusstsein","weight":1}]},
-      {"id":"B","label":"KI-Datenkompetenz – Ich erkunde aktuelle Entwicklungen in Bildungstechnologien und probiere neue Tools aus, um Unterricht frisch zu gestalten.","skills":[{"key":"KI_Datenkompetenz","weight":1}]},
-      {"id":"C","label":"Innovationskompetenz – Ich entwickle eigene Unterrichtsideen oder Lehrmaterialien und teste sie mit Kolleg:innen – als Beitrag zur Schulentwicklung.","skills":[{"key":"Innovationskompetenz","weight":1}]}
+    id: "LEHR_25",
+    text: "Du merkst, dass dir nach vielen Schuljahren die Motivation fehlt. Routine ersetzt Neugier. Du überlegst, wie du dich wieder inspirieren lassen kannst.",
+    options: [
+      { id: "A", label: "Ich reflektiere meine Stärken und was mich ursprünglich an meinem Beruf begeistert hat, um neue Energie zu gewinnen.", skills: [{ key: "Selbstbewusstsein", weight: 1 }] },
+      { id: "B", label: "Ich erkunde aktuelle Entwicklungen in Bildungstechnologien und probiere neue Tools aus, um Unterricht frisch zu gestalten.", skills: [{ key: "KI_Datenkompetenz", weight: 1 }] },
+      { id: "C", label: "Ich entwickle eigene Unterrichtsideen oder Lehrmaterialien und teste sie mit Kolleg:innen – als Beitrag zur Schulentwicklung.", skills: [{ key: "Innovationskompetenz", weight: 1 }] }
     ]
   },
   {
-    "id":"LEHR_26",
-    "text":"Datenschutz im Schulalltag Situation: Die Schulleitung bittet alle Lehrkräfte, Fotos und Arbeitsproben der Schüler:innen für den Tag der offenen Tür digital bereitzustellen. Du stellst fest, dass einige Kolleg:innen ungefragt Bilder in WhatsApp-Gruppen teilen.",
-    "options":[
-      {"id":"A","label":"Digitale Infrastruktur & Cybersicherheit – Ich erkläre dem Kollegium, warum sensible Daten nur auf schulinternen Servern gespeichert werden dürfen, und schlage sichere Alternativen vor.","skills":[{"key":"Digitale_Infrastruktur_und_Cybersicherheit","weight":1}]},
-      {"id":"B","label":"Werteorientiertes Handeln – Ich bleibe bei meiner Haltung, keine personenbezogenen Daten ohne Einwilligung zu teilen, auch wenn es unbequemer ist.","skills":[{"key":"Werteorientiertes_Handeln","weight":1}]},
-      {"id":"C","label":"Urteilsfähigkeit – Ich recherchiere kurz die schulischen Datenschutzrichtlinien und bespreche das Vorgehen offen in der Dienstbesprechung.","skills":[{"key":"Urteilsfaehigkeit","weight":1}]}
+    id: "LEHR_26",
+    text: "Die Schulleitung bittet alle Lehrkräfte, Fotos und Arbeitsproben der Schüler:innen für den Tag der offenen Tür digital bereitzustellen. Einige Kolleg:innen teilen ungefragt Bilder in WhatsApp-Gruppen.",
+    options: [
+      { id: "A", label: "Ich erkläre, warum sensible Daten nur auf schulinternen Servern gespeichert werden dürfen, und schlage sichere Alternativen vor.", skills: [{ key: "Digitale_Infrastruktur_und_Cybersicherheit", weight: 1 }] },
+      { id: "B", label: "Ich bleibe bei meiner Haltung, keine personenbezogenen Daten ohne Einwilligung zu teilen, auch wenn es unbequemer ist.", skills: [{ key: "Werteorientiertes_Handeln", weight: 1 }] },
+      { id: "C", label: "Ich recherchiere kurz die schulischen Datenschutzrichtlinien und bespreche das Vorgehen offen in der Dienstbesprechung.", skills: [{ key: "Urteilsfaehigkeit", weight: 1 }] }
     ]
   },
   {
-    "id":"LEHR_27",
-    "text":"Interkulturelles Missverständnis mit Eltern Situation: Die Eltern eines neu zugezogenen Schülers erscheinen nicht zu vereinbarten Gesprächen. Später erfährst du, dass sie aufgrund sprachlicher Barrieren unsicher sind.",
-    "options":[
-      {"id":"A","label":"Interkulturelle Kommunikation – Ich organisiere mit Unterstützung eines Sprachmittlers ein neues Gespräch und nutze einfache Sprache.","skills":[{"key":"Interkulturelle_Kommunikation","weight":1}]},
-      {"id":"B","label":"Freundlichkeit (Kindness) – Ich schreibe eine wertschätzende Nachricht, in der ich Verständnis zeige und Hilfe anbiete, z. B. über Schulsozialarbeit.","skills":[{"key":"Freundlichkeit","weight":1}]},
-      {"id":"C","label":"Weltoffenheit – Ich rege an, Elternabende künftig mehrsprachig oder mit Visualisierungen zu gestalten.","skills":[{"key":"Weltoffenheit","weight":1}]}
+    id: "LEHR_27",
+    text: "Die Eltern eines neu zugezogenen Schülers erscheinen nicht zu vereinbarten Gesprächen. Später erfährst du, dass sie aufgrund sprachlicher Barrieren unsicher sind.",
+    options: [
+      { id: "A", label: "Ich organisiere mit Unterstützung eines Sprachmittlers ein neues Gespräch und nutze einfache Sprache.", skills: [{ key: "Interkulturelle_Kommunikation", weight: 1 }] },
+      { id: "B", label: "Ich schreibe eine wertschätzende Nachricht, in der ich Verständnis zeige und Hilfe anbiete, z. B. über Schulsozialarbeit.", skills: [{ key: "Freundlichkeit", weight: 1 }] },
+      { id: "C", label: "Ich rege an, Elternabende künftig mehrsprachig oder mit Visualisierungen zu gestalten.", skills: [{ key: "Weltoffenheit", weight: 1 }] }
     ]
   },
   {
-    "id":"LEHR_28",
-    "text":"Cybermobbing in der Klasse Situation: Du bekommst mit, dass in einer Chatgruppe beleidigende Memes über eine Mitschülerin kursieren. Einige Schüler:innen sagen: „Das war doch nur Spaß.“",
-    "options":[
-      {"id":"A","label":"Digitale Ethik & KI-Governance – Ich bespreche mit der Klasse, welche Verantwortung jede:r online trägt und welche rechtlichen Grenzen gelten.","skills":[{"key":"Digitale_Ethik_und_KI_Governance","weight":1}]},
-      {"id":"B","label":"Dialog- & Konfliktfähigkeit – Ich führe ein Gespräch mit den Beteiligten, um Empathie zu fördern und Regeln für den digitalen Umgang zu vereinbaren.","skills":[{"key":"Dialog_und_Konfliktfaehigkeit","weight":1}]},
-      {"id":"C","label":"Werteorientiertes Handeln – Ich melde den Vorfall an die Schulleitung und sorge dafür, dass das Opfer Unterstützung erhält.","skills":[{"key":"Werteorientiertes_Handeln","weight":1}]}
+    id: "LEHR_28",
+    text: "In einer Chatgruppe kursieren beleidigende Memes über eine Mitschülerin. Einige Schüler:innen sagen: „Das war doch nur Spaß.“",
+    options: [
+      { id: "A", label: "Ich bespreche mit der Klasse, welche Verantwortung jede:r online trägt und welche rechtlichen Grenzen gelten.", skills: [{ key: "Digitale_Ethik_und_KI_Governance", weight: 1 }] },
+      { id: "B", label: "Ich führe ein Gespräch mit den Beteiligten, um Empathie zu fördern und Regeln für den digitalen Umgang zu vereinbaren.", skills: [{ key: "Dialog_und_Konfliktfaehigkeit", weight: 1 }] },
+      { id: "C", label: "Ich melde den Vorfall an die Schulleitung und sorge dafür, dass das Opfer Unterstützung erhält.", skills: [{ key: "Werteorientiertes_Handeln", weight: 1 }] }
     ]
   },
   {
-    "id":"LEHR_29",
-    "text":"Fehlgeschlagenes Unterrichtsexperiment Situation: Du wolltest im Physikunterricht ein neues Experiment ausprobieren. Es misslingt – vor der gesamten Klasse. Die Schüler:innen lachen.",
-    "options":[
-      {"id":"A","label":"Resilienz – Ich bleibe gelassen, beziehe den Fehler humorvoll ein und erkläre, dass Experimente auch scheitern dürfen.","skills":[{"key":"Resilienz","weight":1}]},
-      {"id":"B","label":"Selbstbewusstsein – Ich zeige souverän, dass Fehler Teil des Lernprozesses sind, und motiviere die Schüler:innen, eigene Versuche kritisch zu hinterfragen.","skills":[{"key":"Selbstbewusstsein","weight":1}]},
-      {"id":"C","label":"Agilität – Ich improvisiere und leite spontan ein Lern-Gespräch über Hypothesen und Fehlersuche.","skills":[{"key":"Agilitaet","weight":1}]}
+    id: "LEHR_29",
+    text: "Im Physikunterricht misslingt ein neues Experiment vor der gesamten Klasse. Die Schüler:innen lachen.",
+    options: [
+      { id: "A", label: "Ich bleibe gelassen, beziehe den Fehler humorvoll ein und erkläre, dass Experimente auch scheitern dürfen.", skills: [{ key: "Resilienz", weight: 1 }] },
+      { id: "B", label: "Ich zeige souverän, dass Fehler Teil des Lernprozesses sind, und motiviere die Schüler:innen, eigene Versuche kritisch zu hinterfragen.", skills: [{ key: "Selbstbewusstsein", weight: 1 }] },
+      { id: "C", label: "Ich improvisiere und leite spontan ein Lern-Gespräch über Hypothesen und Fehlersuche.", skills: [{ key: "Agilitaet", weight: 1 }] }
     ]
   },
   {
-    "id":"LEHR_30",
-    "text":"KI-gestützte Notenverwaltung Situation: Die Schule testet ein neues Programm, das Lernstände automatisch auswertet und Noten vorschlägt. Einige Lehrkräfte zweifeln an der Objektivität.",
-    "options":[
-      {"id":"A","label":"KI-Datenkompetenz – Ich prüfe, auf welchen Parametern das System basiert, und kontrolliere, ob Bewertungen nachvollziehbar sind.","skills":[{"key":"KI_Datenkompetenz","weight":1}]},
-      {"id":"B","label":"Urteilsfähigkeit – Ich analysiere kritisch, wo KI unterstützen darf und wo pädagogische Verantwortung beim Menschen bleibt.","skills":[{"key":"Urteilsfaehigkeit","weight":1}]},
-      {"id":"C","label":"Veränderungskompetenz – Ich begleite den Pilotversuch aktiv, dokumentiere Erfahrungen und gebe konstruktives Feedback an die Schulleitung.","skills":[{"key":"Veraenderungskompetenz","weight":1}]}
+    id: "LEHR_30",
+    text: "Die Schule testet ein Programm, das Lernstände automatisch auswertet und Noten vorschlägt. Einige Lehrkräfte zweifeln an der Objektivität.",
+    options: [
+      { id: "A", label: "Ich prüfe, auf welchen Parametern das System basiert, und kontrolliere, ob Bewertungen nachvollziehbar sind.", skills: [{ key: "KI_Datenkompetenz", weight: 1 }] },
+      { id: "B", label: "Ich analysiere kritisch, wo KI unterstützen darf und wo pädagogische Verantwortung beim Menschen bleibt.", skills: [{ key: "Urteilsfaehigkeit", weight: 1 }] },
+      { id: "C", label: "Ich begleite den Pilotversuch aktiv, dokumentiere Erfahrungen und gebe konstruktives Feedback an die Schulleitung.", skills: [{ key: "Veraenderungskompetenz", weight: 1 }] }
     ]
   },
   {
-    "id":"LEHR_31",
-    "text":"Schulnetzwerk-Ausfall mitten im Unterricht Situation: Während einer Präsentation fällt plötzlich das WLAN im gesamten Schulgebäude aus. Deine Klasse soll eigentlich Online-Recherche betreiben.",
-    "options":[
-      {"id":"A","label":"Digitale Infrastruktur & Cybersicherheit – Ich bleibe ruhig, erkläre kurz die technischen Grundlagen und die Bedeutung von Backup-Systemen und leite zu einer Offline-Methode über.","skills":[{"key":"Digitale_Infrastruktur_und_Cybersicherheit","weight":1}]},
-      {"id":"B","label":"Agilität – Ich improvisiere: Die Klasse sammelt Ideen auf Papier und reflektiert anschließend, wie stark digitale Abhängigkeit das Lernen beeinflusst.","skills":[{"key":"Agilitaet","weight":1}]},
-      {"id":"C","label":"Lösungsfähigkeit – Ich nutze die Situation als Problemfall: „Wie kann Unterricht ohne Internet funktionieren?“ – und lasse die Schüler:innen Konzepte entwickeln.","skills":[{"key":"Loesungsfaehigkeit","weight":1}]}
+    id: "LEHR_31",
+    text: "Während einer Präsentation fällt das WLAN im gesamten Schulgebäude aus. Deine Klasse sollte eigentlich Online-Recherche betreiben.",
+    options: [
+      { id: "A", label: "Ich erkläre kurz technische Grundlagen und die Bedeutung von Backup-Systemen und leite zu einer Offline-Methode über.", skills: [{ key: "Digitale_Infrastruktur_und_Cybersicherheit", weight: 1 }] },
+      { id: "B", label: "Ich improvisiere: Die Klasse sammelt Ideen auf Papier und reflektiert anschließend die digitale Abhängigkeit.", skills: [{ key: "Agilitaet", weight: 1 }] },
+      { id: "C", label: "Ich nutze die Situation als Problemfall: „Wie kann Unterricht ohne Internet funktionieren?“ – die Schüler:innen entwickeln Konzepte.", skills: [{ key: "Loesungsfaehigkeit", weight: 1 }] }
     ]
   },
   {
-    "id":"LEHR_32",
-    "text":"Umgang mit KI-generierten Schülerarbeiten Situation: Eine 10.-Klässlerin reicht ein Kunstprojekt ein, das sichtlich mit einem KI-Bildgenerator erstellt wurde. Es ist kreativ, aber die Eigenleistung ist unklar.",
-    "options":[
-      {"id":"A","label":"Digitale Ethik & KI-Governance – Ich bespreche offen, wo die Grenze zwischen eigener Idee und automatisierter Erstellung liegt.","skills":[{"key":"Digitale_Ethik_und_KI_Governance","weight":1}]},
-      {"id":"B","label":"Urteilsfähigkeit – Ich entscheide, die Arbeit nicht abzuwerten, sondern als Anlass zu nutzen, den kreativen Prozess zu reflektieren.","skills":[{"key":"Urteilsfaehigkeit","weight":1}]},
-      {"id":"C","label":"Innovationskompetenz – Ich erarbeite mit der Klasse neue Bewertungskriterien für Projekte mit KI-Unterstützung.","skills":[{"key":"Innovationskompetenz","weight":1}]}
+    id: "LEHR_32",
+    text: "Eine 10.-Klässlerin reicht ein Kunstprojekt ein, das sichtlich mit einem KI-Bildgenerator erstellt wurde. Es ist kreativ, aber die Eigenleistung ist unklar.",
+    options: [
+      { id: "A", label: "Ich bespreche offen, wo die Grenze zwischen eigener Idee und automatisierter Erstellung liegt.", skills: [{ key: "Digitale_Ethik_und_KI_Governance", weight: 1 }] },
+      { id: "B", label: "Ich werte die Arbeit nicht ab, sondern nutze sie als Anlass, den kreativen Prozess zu reflektieren.", skills: [{ key: "Urteilsfaehigkeit", weight: 1 }] },
+      { id: "C", label: "Ich erarbeite mit der Klasse neue Bewertungskriterien für Projekte mit KI-Unterstützung.", skills: [{ key: "Innovationskompetenz", weight: 1 }] }
     ]
   },
   {
-    "id":"LEHR_33",
-    "text":"Schüler:innen übernehmen Verantwortung Situation: Du willst, dass deine 8. Klasse stärker selbst organisiert arbeitet. In einer Projektphase sollen sie Ablauf, Rollen und Zeitplan eigenständig gestalten.",
-    "options":[
-      {"id":"A","label":"Eigenverantwortung & Selbstwirksamkeit – Ich lasse die Klasse den Projektplan selbst erarbeiten und begleite sie nur beratend.","skills":[{"key":"Eigenverantwortung_und_Selbstwirksamkeit","weight":1}]},
-      {"id":"B","label":"Dialog- & Konfliktfähigkeit – Ich beobachte die Gruppenarbeit, greife moderierend ein, wenn Spannungen entstehen.","skills":[{"key":"Dialog_und_Konfliktfaehigkeit","weight":1}]},
-      {"id":"C","label":"Veränderungskompetenz – Ich reflektiere danach mit der Klasse, was funktioniert hat und wie sie Verantwortung künftig noch besser übernehmen können.","skills":[{"key":"Veraenderungskompetenz","weight":1}]}
+    id: "LEHR_33",
+    text: "Deine 8. Klasse soll in einer Projektphase Ablauf, Rollen und Zeitplan eigenständig gestalten.",
+    options: [
+      { id: "A", label: "Ich lasse die Klasse den Projektplan selbst erarbeiten und begleite nur beratend.", skills: [{ key: "Eigenverantwortung_und_Selbstwirksamkeit", weight: 1 }] },
+      { id: "B", label: "Ich beobachte die Gruppenarbeit und greife moderierend ein, wenn Spannungen entstehen.", skills: [{ key: "Dialog_und_Konfliktfaehigkeit", weight: 1 }] },
+      { id: "C", label: "Ich reflektiere danach mit der Klasse, was funktioniert hat und wie Verantwortung künftig noch besser übernommen werden kann.", skills: [{ key: "Veraenderungskompetenz", weight: 1 }] }
     ]
   },
   {
-    "id":"LEHR_34",
-    "text":"Schule als Lernort der Zukunft Situation: Auf einer pädagogischen Konferenz sollen neue Unterrichtsformen vorgestellt werden. Du bist gebeten, ein Beispiel aus deiner Praxis zu präsentieren.",
-    "options":[
-      {"id":"A","label":"Unternehmerisches Denken & Innovationsgeist – Ich entwickle eine kurze Präsentation, die zeigt, wie eigeninitiatives Denken und Lernprojekte Schüler:innen motivieren.","skills":[{"key":"Unternehmerisches_Denken_und_Innovationsgeist","weight":1}]},
-      {"id":"B","label":"Kreativität – Ich visualisiere meine Ideen mit anschaulichen Beispielen, Videos oder Schülerprodukten.","skills":[{"key":"Kreativitaet","weight":1}]},
-      {"id":"C","label":"Selbstbewusstsein – Ich nutze die Gelegenheit, um meine Erfahrungen selbstsicher im Kollegium einzubringen.","skills":[{"key":"Selbstbewusstsein","weight":1}]}
+    id: "LEHR_34",
+    text: "Auf einer pädagogischen Konferenz sollen neue Unterrichtsformen vorgestellt werden. Du sollst ein Beispiel aus deiner Praxis präsentieren.",
+    options: [
+      { id: "A", label: "Ich zeige, wie eigeninitiatives Denken und Lernprojekte Schüler:innen motivieren, und präsentiere eine kurze Praxisidee.", skills: [{ key: "Unternehmerisches_Denken_und_Innovationsgeist", weight: 1 }] },
+      { id: "B", label: "Ich visualisiere meine Ideen mit anschaulichen Beispielen, Videos oder Schülerprodukten.", skills: [{ key: "Kreativitaet", weight: 1 }] },
+      { id: "C", label: "Ich nutze die Gelegenheit, um meine Erfahrungen selbstsicher im Kollegium einzubringen.", skills: [{ key: "Selbstbewusstsein", weight: 1 }] }
     ]
   },
   {
-    "id":"LEHR_35",
-    "text":"Künstliche Intelligenz in der Schulorganisation Situation: Die Schulleitung prüft, ob KI-gestützte Tools (z. B. Terminplanung, Stundenplanoptimierung, Elternkommunikation) eingesetzt werden sollen. Du darfst im Testteam mitarbeiten.",
-    "options":[
-      {"id":"A","label":"KI-Datenkompetenz – Ich analysiere, welche Daten die Tools verarbeiten, und prüfe, ob sie DSGVO-konform sind.","skills":[{"key":"KI_Datenkompetenz","weight":1}]},
-      {"id":"B","label":"Innovationskompetenz – Ich teste das Tool, dokumentiere Nutzen und Risiken und erarbeite mit Kolleg:innen Vorschläge zur Integration in den Schulalltag.","skills":[{"key":"Innovationskompetenz","weight":1}]},
-      {"id":"C","label":"Digitale Kollaboration – Ich stimme mich mit Verwaltung und Kollegium ab, um das System gemeinsam sinnvoll einzuführen.","skills":[{"key":"Digitale_Kollaboration","weight":1}]}
+    id: "LEHR_35",
+    text: "Die Schulleitung prüft, ob KI-gestützte Tools (z. B. Terminplanung, Stundenplanoptimierung, Elternkommunikation) eingesetzt werden sollen. Du darfst im Testteam mitarbeiten.",
+    options: [
+      { id: "A", label: "Ich analysiere, welche Daten die Tools verarbeiten, und prüfe, ob sie DSGVO-konform sind.", skills: [{ key: "KI_Datenkompetenz", weight: 1 }] },
+      { id: "B", label: "Ich teste das Tool, dokumentiere Nutzen und Risiken und erarbeite Vorschläge zur Integration in den Schulalltag.", skills: [{ key: "Innovationskompetenz", weight: 1 }] },
+      { id: "C", label: "Ich stimme mich mit Verwaltung und Kollegium ab, um das System gemeinsam sinnvoll einzuführen.", skills: [{ key: "Digitale_Kollaboration", weight: 1 }] }
     ]
   }
 ];
+
 
 /* ===== State ===== */
 const allSkills = Object.values(CATEGORIES).flat();
@@ -933,3 +934,4 @@ document.addEventListener("keydown", (e) => {
 </script>
 </body>
 </html>
+
